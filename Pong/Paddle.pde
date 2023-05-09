@@ -1,7 +1,10 @@
 class Paddle extends GameObject {
+  int upKey, downKey;
   
-  Paddle(PVector pos) {
-    super(pos, new PVector(height / 25.0, height / 7.0), 300.0, currentStyle.white);
+  Paddle(PVector pos, PVector size, int upKey, int downKey) {
+    super(pos, size, 300.0, currentStyle.white);
+    this.upKey = upKey;
+    this.downKey = downKey;
   }
   
   void render() {
@@ -11,11 +14,13 @@ class Paddle extends GameObject {
   }
   
   void doInput() {
-    if (Input.isKeyHeld(UP)) {
+    if (Input.isKeyHeld(upKey)) {
       pos.y -= speed * deltaTime;
+      return;
     }
-    if (Input.isKeyHeld(DOWN)) {
+    if (Input.isKeyHeld(downKey)) {
       pos.y += speed * deltaTime;
+      return;
     }
   }
   
