@@ -20,9 +20,12 @@ void setCurrentLayout(Layout currentLayout) {
 // Default Processing method overrides
 
 void draw() {
+  final float MILLIS_TO_SECONDS = 0.001;
+  float oldTime = millis();
   if (currentLayout != null) {
     currentLayout.update();
   }
+  deltaTime = (millis() - oldTime) * MILLIS_TO_SECONDS;
   Input.updateStates();
 }
 
