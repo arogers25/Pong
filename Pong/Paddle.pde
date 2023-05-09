@@ -13,11 +13,9 @@ class Paddle extends GameObject {
   void doInput() {
     if (Input.isKeyHeld(UP)) {
       pos.y -= speed * deltaTime;
-      return;
     }
     if (Input.isKeyHeld(DOWN)) {
       pos.y += speed * deltaTime;
-      return;
     }
   }
   

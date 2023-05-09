@@ -94,7 +94,7 @@ final class Input {
   }
   
   public static void doKeyPressed() {
-    if (isKeyValid(appInst.keyCode)) {
+    if (isKeyValid(appInst.keyCode) && keyStates[appInst.keyCode] != HELD) {
       keyStates[appInst.keyCode] = PRESSED;
     }
   }
