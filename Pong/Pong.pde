@@ -7,4 +7,5 @@ void settings() {
 
 void setup() {
   setupAppEngine();
+  setCurrentLayout(new MenuLayout());
 }
