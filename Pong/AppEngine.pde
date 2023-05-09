@@ -21,11 +21,11 @@ void setCurrentLayout(Layout currentLayout) {
 
 void draw() {
   final float MILLIS_TO_SECONDS = 0.001;
-  float oldTime = millis();
+  deltaTime = (millis() - oldTime) * MILLIS_TO_SECONDS;
   if (currentLayout != null) {
     currentLayout.update();
   }
-  deltaTime = (millis() - oldTime) * MILLIS_TO_SECONDS;
+  oldTime = millis();
   Input.updateStates();
 }
 

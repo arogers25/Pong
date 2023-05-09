@@ -1,7 +1,7 @@
 class Paddle extends GameObject {
   
   Paddle(PVector pos) {
-    super(pos, new PVector(height / 25.0, height / 7.0), 10.0, currentStyle.white);
+    super(pos, new PVector(height / 25.0, height / 7.0), 300.0, currentStyle.white);
   }
   
   void render() {
@@ -11,6 +11,14 @@ class Paddle extends GameObject {
   }
   
   void doInput() {
+    if (Input.isKeyHeld(UP)) {
+      pos.y -= speed * deltaTime;
+      return;
+    }
+    if (Input.isKeyHeld(DOWN)) {
+      pos.y += speed * deltaTime;
+      return;
+    }
   }
   
   void gameTick() {
