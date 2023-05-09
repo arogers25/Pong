@@ -5,6 +5,7 @@ class MenuLayout extends Layout {
   }
   
   void onPlayButtonPressed() {
+    setCurrentLayout(new GameLayout());
   }
   
   private void addMenuButtons() {
