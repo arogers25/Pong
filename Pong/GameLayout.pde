@@ -6,7 +6,7 @@ class GameLayout extends Layout {
     float startingPaddleY = currentStyle.center.y - (paddleSize.y / 2.0);
     Paddle leftPaddle = new Paddle(new PVector(width * (1.0 / 6.0) - paddleOffsetX, startingPaddleY), paddleSize, 'W', 'S');
     addElement(leftPaddle);
-    Paddle rightPaddle = new Paddle(new PVector(width * (5.0 / 6.0), startingPaddleY), paddleSize, UP, DOWN);
+    Paddle rightPaddle = new Paddle(new PVector(width * (5.0 / 6.0) - paddleOffsetX, startingPaddleY), paddleSize, UP, DOWN);
     addElement(rightPaddle);
   }
   
