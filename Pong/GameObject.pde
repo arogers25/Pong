@@ -2,10 +2,8 @@ abstract class GameObject extends PositionedElement {
   protected float speed;
   protected color col;
   
-  GameObject(PVector pos, PVector size, float speed, color col) {
+  GameObject(PVector pos, PVector size) {
     super(pos, size);
-    this.speed = speed;
-    this.col = col;
   }
   
   float getSpeed() {

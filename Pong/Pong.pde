@@ -10,3 +10,9 @@ void setup() {
   setupAppEngine();
   setCurrentLayout(new MenuLayout());
 }
+
+void updateDeltaTime() {
+  final float MILLIS_TO_SECONDS = 0.001;
+  deltaTime = (millis() - oldTime) * MILLIS_TO_SECONDS;
+  oldTime = millis();
+}
