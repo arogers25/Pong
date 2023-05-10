@@ -17,11 +17,12 @@ class Paddle extends GameObject {
   }
   
   void doInput() {
-    if (Input.isKeyHeld(upKey)) {
+    if (Input.isKeyHeld(upKey) && pos.y > 0) {
       pos.y -= speed * deltaTime;
       return;
     }
-    if (Input.isKeyHeld(downKey)) {
+    float paddleMaxY = pos.y + size.y;
+    if (Input.isKeyHeld(downKey) && paddleMaxY < height) {
       pos.y += speed * deltaTime;
       return;
     }
