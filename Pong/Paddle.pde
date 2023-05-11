@@ -12,6 +12,7 @@ class Paddle extends GameObject {
   
   void render() {
     pushStyle();
+    fill(col);
     rect(pos.x, pos.y, size.x, size.y);
     popStyle();
   }

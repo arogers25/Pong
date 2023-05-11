@@ -11,6 +11,7 @@ void setupAppEngine() {
   Input.setAppInst(this);
   currentStyle = new Style();
   textFont(currentStyle.mainFont);
+  ellipseMode(CORNER);
 }
 
 void setCurrentLayout(Layout currentLayout) {
