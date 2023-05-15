@@ -78,10 +78,19 @@ class Ball extends GameObject {
   }
   
   private boolean updatePaddleCollision() {
-    if (getCollidedPaddle() == null) {
+    Paddle collidedPaddle = getCollidedPaddle();
+    if (collidedPaddle == null) {
       return false;
     }
-    direction.x = -direction.x;
+    PVector paddlePos = collidedPaddle.getPos();
+    PVector paddleSize = collidedPaddle.getSize();
+    PVector ballCenter = PVector.add(pos, PVector.div(size, 2.0));
+    float ballCollideY = constrain(ballCenter.y - paddlePos.y, 0, paddleSize.y);
+    float newAngle = map(ballCollideY, 0, paddleSize.y, QUARTER_PI, 0);
+    setAngle(-newAngle);
+    if ((pos.x - paddlePos.x) < 0) {
+      direction.x = -direction.x;
+    }
     return true;
   }
 }
