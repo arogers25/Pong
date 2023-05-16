@@ -96,9 +96,9 @@ class Ball extends GameObject {
     PVector ballCenter = PVector.add(pos, PVector.div(size, 2.0));
     float ballCollideY = constrain(ballCenter.y - paddlePos.y, 0, paddleSize.y);
     float newAngle = map(ballCollideY, 0, paddleSize.y / 2.0, QUARTER_PI, 0);
-    float speedIncFactor = map(abs(newAngle), 0, QUARTER_PI, 1.0, -0.5); // This can be improved
+    float speedChangeFactor = map(abs(newAngle), 0, QUARTER_PI, 1.0, -0.3); // This can be improved
     setAngle(-newAngle);
-    adjustSpeed(speedIncFactor * 100.0);
+    adjustSpeed(speedChangeFactor * 100.0);
     if ((pos.x - paddlePos.x) < 0) {
       direction.x = -direction.x;
     }
