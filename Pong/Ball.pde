@@ -2,6 +2,7 @@ class Ball extends GameObject {
   private PVector direction;
   private float radius;
   private Paddle[] targetPaddles;
+  private PVector oldPos;
   
   Ball(PVector pos, float radius, Paddle... targetPaddles) {
     super(pos, new PVector(radius, radius));
@@ -10,6 +11,7 @@ class Ball extends GameObject {
     this.radius = radius;
     direction = new PVector();
     this.targetPaddles = targetPaddles;
+    oldPos = pos.copy();
   }
   
   void render() {
@@ -35,12 +37,12 @@ class Ball extends GameObject {
   }
   
   void gameTick() {
-    PVector oldPos = pos.copy();
-    pos.add(direction.x * speed * deltaTime, direction.y * speed * deltaTime);
     boolean resetPos = updateEdgeCollision() || updatePaddleCollision();
     if (resetPos) {
       pos.set(oldPos);
     }
+    pos.add(direction.x * speed * deltaTime, direction.y * speed * deltaTime);
+    oldPos = pos.copy();
   }
   
   private boolean updateEdgeCollision() {
@@ -62,7 +64,7 @@ class Ball extends GameObject {
     PVector maxs = PVector.add(pos, size);
     PVector paddlePos = paddle.getPos();
     PVector paddleMaxs = PVector.add(paddlePos, paddle.getSize());
-    return pos.x < paddleMaxs.x && maxs.x > paddlePos.x && pos.y < paddleMaxs.y && maxs.y > paddlePos.y;
+    return pos.x <= paddleMaxs.x && maxs.x >= paddlePos.x && pos.y <= paddleMaxs.y && maxs.y >= paddlePos.y;
   }
   
   private Paddle getCollidedPaddle() { // Using a for loop instead of individual if statements for collision allows for multiple custom paddles
