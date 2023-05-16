@@ -1,12 +1,15 @@
 class Ball extends GameObject {
   private PVector direction;
   private float radius;
+  private float minSpeed, maxSpeed;
   private Paddle[] targetPaddles;
   private PVector oldPos;
   
   Ball(PVector pos, float radius, Paddle... targetPaddles) {
     super(pos, new PVector(radius, radius));
-    this.speed = 300.0;
+    this.minSpeed = 300.0;
+    this.maxSpeed = 1000.0;
+    this.speed = minSpeed;
     this.col = currentStyle.white;
     this.radius = radius;
     direction = new PVector();
@@ -33,6 +36,10 @@ class Ball extends GameObject {
     this.direction.set(PVector.fromAngle(angle));
   }
   
+  void adjustSpeed(float adjust) {
+    setSpeed(constrain(speed + adjust, minSpeed, maxSpeed));
+  }
+  
   void doInput() {
   }
   
@@ -46,11 +53,11 @@ class Ball extends GameObject {
   }
   
   private boolean updateEdgeCollision() {
-    if (pos.x <= 0 || pos.x + size.x >= width) {
+    if (pos.x < 0 || (pos.x + size.x) > width) {
       direction.x = -direction.x;
       return true;
     }
-    if (pos.y <= 0 || pos.y + size.y >= height) {
+    if (pos.y < 0 || (pos.y + size.y) > height) {
       direction.y = -direction.y;
       return true;
     }
@@ -88,8 +95,10 @@ class Ball extends GameObject {
     PVector paddleSize = collidedPaddle.getSize();
     PVector ballCenter = PVector.add(pos, PVector.div(size, 2.0));
     float ballCollideY = constrain(ballCenter.y - paddlePos.y, 0, paddleSize.y);
-    float newAngle = map(ballCollideY, 0, paddleSize.y, QUARTER_PI, 0);
+    float newAngle = map(ballCollideY, 0, paddleSize.y / 2.0, QUARTER_PI, 0);
+    float speedIncFactor = map(abs(newAngle), 0, QUARTER_PI, 1.0, -0.5); // This can be improved
     setAngle(-newAngle);
+    adjustSpeed(speedIncFactor * 100.0);
     if ((pos.x - paddlePos.x) < 0) {
       direction.x = -direction.x;
     }
