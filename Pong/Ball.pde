@@ -44,8 +44,10 @@ class Ball extends GameObject {
   }
   
   void gameTick() {
-    boolean resetPos = updateEdgeCollision() || updatePaddleCollision();
-    if (resetPos) {
+    // Both collision detections evaluated individually to make sure they run
+    boolean edgeReset = updateEdgeCollision();
+    boolean paddleReset = updatePaddleCollision();
+    if (edgeReset || paddleReset) {
       pos.set(oldPos);
     }
     pos.add(direction.x * speed * deltaTime, direction.y * speed * deltaTime);
@@ -53,10 +55,6 @@ class Ball extends GameObject {
   }
   
   private boolean updateEdgeCollision() {
-    if (pos.x < 0 || (pos.x + size.x) > width) {
-      direction.x = -direction.x;
-      return true;
-    }
     if (pos.y < 0 || (pos.y + size.y) > height) {
       direction.y = -direction.y;
       return true;
