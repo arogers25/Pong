@@ -1,14 +1,15 @@
 class Ball extends GameObject {
   private PVector direction;
   private float radius;
-  private float minSpeed, maxSpeed;
+  private float minSpeed, maxSpeed, speedInc;
   private Paddle[] targetPaddles;
   private PVector oldPos;
   
   Ball(PVector pos, float radius, Paddle... targetPaddles) {
     super(pos, new PVector(radius, radius));
-    this.minSpeed = 300.0;
+    this.minSpeed = 500.0;
     this.maxSpeed = 1000.0;
+    this.speedInc = 20.0;
     this.speed = minSpeed;
     this.col = currentStyle.white;
     this.radius = radius;
@@ -44,14 +45,15 @@ class Ball extends GameObject {
   }
   
   void gameTick() {
+    pos.add(direction.x * speed * deltaTime, direction.y * speed * deltaTime);
     // Both collision detections evaluated individually to make sure they run
     boolean edgeReset = updateEdgeCollision();
     boolean paddleReset = updatePaddleCollision();
     if (edgeReset || paddleReset) {
       pos.set(oldPos);
+    } else {
+      oldPos = pos.copy();
     }
-    pos.add(direction.x * speed * deltaTime, direction.y * speed * deltaTime);
-    oldPos = pos.copy();
   }
   
   private boolean updateEdgeCollision() {
@@ -91,15 +93,20 @@ class Ball extends GameObject {
     }
     PVector paddlePos = collidedPaddle.getPos();
     PVector paddleSize = collidedPaddle.getSize();
+    float nextHeight = constrain(paddleSize.y + collidedPaddle.getYAdjust(), 0.0, paddleSize.y);
     PVector ballCenter = PVector.add(pos, PVector.div(size, 2.0));
-    float ballCollideY = constrain(ballCenter.y - paddlePos.y, 0, paddleSize.y);
-    float newAngle = map(ballCollideY, 0, paddleSize.y / 2.0, QUARTER_PI, 0);
-    float speedChangeFactor = map(abs(newAngle), 0, QUARTER_PI, 1.0, -0.3); // This can be improved
-    setAngle(-newAngle);
-    adjustSpeed(speedChangeFactor * 100.0);
-    if ((pos.x - paddlePos.x) < 0) {
+    PVector paddleCenter = PVector.add(paddlePos, PVector.div(paddleSize, 2.0));
+    if (collidedPaddle.getYAdjust() != 0) {
+      float reflectAngle = atan2(ballCenter.x - paddleCenter.x, ballCenter.y - (paddleCenter.y + collidedPaddle.getYAdjust()));
+      setAngle(HALF_PI - reflectAngle);
+      //if (reflectAngle  //<>//
+      if ((-collidedPaddle.getYAdjust() * direction.y) > 0) {
+        direction.y = -direction.y;
+      }
+    } else {
       direction.x = -direction.x;
-    }
+    } //<>//
+    adjustSpeed(collidedPaddle.getYAdjust() * -direction.y * speedInc);
     return true;
   }
 }

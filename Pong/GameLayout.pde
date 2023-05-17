@@ -9,7 +9,8 @@ class GameLayout extends Layout {
     Paddle rightPaddle = new Paddle(new PVector(width * (5.0 / 6.0) - paddleOffsetX, startingPaddleY), paddleSize, UP, DOWN);
     addElement(rightPaddle);
     Ball ball = new Ball(currentStyle.center, height / 30.0, leftPaddle, rightPaddle);
-    ball.setAngle(PI);
+    final float startAngle = PI / 1.5;
+    ball.setAngle(startAngle);
     addElement(ball);
   }
   
