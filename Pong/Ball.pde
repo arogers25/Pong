@@ -64,14 +64,27 @@ class Ball extends GameObject {
     return false;
   }
   
+  // Using a rectangular collisions for a circular ball leads to inaccuracies in detection, especially at edges
+  // Limiting the center of the ball to the paddle's bounds gives the ball's closest point to an edge of the paddle
+  // From there, we can compare if the distance between the point and the ball is less than the ball's radius if they have collided
   private boolean collidesWithPaddle(Paddle paddle) {
     if (paddle == null) {
       return false;
     }
-    PVector maxs = PVector.add(pos, size);
     PVector paddlePos = paddle.getPos();
     PVector paddleMaxs = PVector.add(paddlePos, paddle.getSize());
-    return pos.x <= paddleMaxs.x && maxs.x >= paddlePos.x && pos.y <= paddleMaxs.y && maxs.y >= paddlePos.y;
+    PVector ballCenter = PVector.add(pos, PVector.div(size, 2.0));
+    PVector limitedBallCenter = ballCenter.copy();
+    limitedBallCenter.x = constrain(limitedBallCenter.x, paddlePos.x, paddleMaxs.x);
+    limitedBallCenter.y = constrain(limitedBallCenter.y, paddlePos.y, paddleMaxs.y);
+    final float HALF_RADIUS = radius * 0.5;
+    
+    /*pushStyle();
+    stroke(255, 0, 0);
+    circle(limitedBallCenter.x, limitedBallCenter.y, HALF_RADIUS);
+    popStyle();*/
+    
+    return PVector.dist(ballCenter, limitedBallCenter) <= (HALF_RADIUS);
   }
   
   private Paddle getCollidedPaddle() { // Using a for loop instead of individual if statements for collision allows for multiple custom paddles
