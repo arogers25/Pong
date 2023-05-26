@@ -7,9 +7,9 @@ class Ball extends GameObject { //<>// //<>//
 
   Ball(PVector pos, float radius, Paddle... targetPaddles) {
     super(pos, new PVector(radius, radius));
-    this.minSpeed = width / 3.50;
-    this.maxSpeed = width / 1.90;
-    this.speedInc = width / 96.0;
+    this.minSpeed = (width / size.x) * 10.0;
+    this.maxSpeed = (width / size.x) * 15.0;
+    this.speedInc = (width / size.x) * 2.0;
     this.speed = minSpeed;
     this.col = currentStyle.white;
     this.radius = radius;
@@ -116,7 +116,8 @@ class Ball extends GameObject { //<>// //<>//
         direction.y = -direction.y;
       }
       if (collidedPaddle.getYAdjust() != 0.0) {
-        adjustSpeed((collidedPaddle.getYAdjust() * 0.5) * -direction.y * speedInc);
+        float constrainedYAdjust = constrain(collidedPaddle.getYAdjust(), -1.5, 2.0);
+        adjustSpeed(constrainedYAdjust * -direction.y * speedInc);
       } else {
         adjustSpeed(speedInc);
       }
