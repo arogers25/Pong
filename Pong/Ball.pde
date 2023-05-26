@@ -1,4 +1,4 @@
-class Ball extends GameObject { //<>// //<>//
+class Ball extends GameObject { //<>//
   private PVector direction;
   private float radius;
   private float minSpeed, maxSpeed, speedInc;

@@ -16,11 +16,17 @@ class GameLayout extends Layout {
     addElement(leftScoreZone);
     rightScoreZone = new ScoreZone(1, new PVector(width * (7.0 / 8.0), 0.0), new PVector(width / 8.0, height));
     addElement(rightScoreZone);
-    createBall();
+    final float startAngle = PI / 1.5;
+    createBall(startAngle);
   }
   
   void update() {
     super.update();
+    int scored = max(leftScoreZone.hasBallEntered(), rightScoreZone.hasBallEntered());
+    if (scored != -1) {
+      float angle = (scored == 0 ? PI / 1.5 : PI / 1.5 + PI);
+      createBall(angle);
+    }
     ball.update();
   }
   
@@ -28,9 +34,10 @@ class GameLayout extends Layout {
     background(currentStyle.black);
   }
   
-  private void createBall() {
-    ball = new Ball(currentStyle.center, height / 30.0, leftPaddle, rightPaddle);
-    final float startAngle = PI / 1.5;
-    ball.setAngle(startAngle);
+  private void createBall(float angle) {
+    ball = new Ball(currentStyle.center.copy(), height / 30.0, leftPaddle, rightPaddle);
+    ball.setAngle(angle);
+    leftScoreZone.setTargetBall(ball);
+    rightScoreZone.setTargetBall(ball);
   }
 }

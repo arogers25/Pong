@@ -22,15 +22,18 @@ class ScoreZone extends PositionedElement {
     PVector ballPos = targetBall.getPos();
     PVector ballMaxs = PVector.add(ballPos, targetBall.getSize());
     PVector maxs = PVector.add(pos, size);
-    return (ballMaxs.x >= pos.x && ballPos.x <= maxs.x && ballMaxs.y >= pos.y && ballPos.x <= maxs.y);
+    return (ballMaxs.x >= pos.x && ballPos.x <= maxs.x && ballMaxs.y >= pos.y && ballPos.y <= maxs.y);
   }
   
-  void resetBallEntered() {
-    entered = false;
+  int hasBallEntered() {
+    return entered ? side : -1;
   }
   
-  boolean hasBallEntered() {
-    return entered;
+  void setTargetBall(Ball targetBall) {
+    if (targetBall == null) {
+      return;
+    }
+    this.targetBall = targetBall;
   }
   
   void update() {
