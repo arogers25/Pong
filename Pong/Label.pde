@@ -4,11 +4,13 @@ class Label extends PositionedElement {
   private PVector adjustedPos;
   private color col;
   private int alignX, alignY;
+  private boolean hasAdjustedPos = false;
 
   Label(String displayText, PVector pos, PVector size, color col, int alignX, int alignY) {
     super(pos, size);
     setDisplayText(displayText);
     this.col = col;
+    adjustLabelSize();
     setAlignMode(alignX, alignY);
   }
 
@@ -29,19 +31,27 @@ class Label extends PositionedElement {
     pushStyle();
     adjustedTextSize = size.y * STARTING_SCALE_FACTOR;
     textSize(adjustedTextSize);
-    float currentTextWidth = textWidth(displayText);
-    float targetTextWidth = size.x * SCALE_FIT_PERCENTAGE;
-    if (currentTextWidth > targetTextWidth) {
-      float targetWidthRatio = (targetTextWidth / currentTextWidth);
-      adjustedTextSize = targetWidthRatio * adjustedTextSize;
+    if (size.x > 0.0) {
+      float currentTextWidth = textWidth(displayText);
+      float targetTextWidth = size.x * SCALE_FIT_PERCENTAGE;
+      if (currentTextWidth > targetTextWidth) {
+        float targetWidthRatio = (targetTextWidth / currentTextWidth);
+        adjustedTextSize = targetWidthRatio * adjustedTextSize;
+      }
     }
     popStyle();
   }
 
   private void updateAdjustedPos() {
+    if (hasAdjustedPos) {
+      return;
+    }
     adjustedPos = new PVector();
     adjustedPos.x = alignX == CENTER ? pos.x + size.x / 2.0 : pos.x;
     adjustedPos.y = alignY == CENTER ? pos.y + size.y / 2.0 : pos.y;
+    if (size.x <= 0.0) {
+      hasAdjustedPos = true;
+    }
   }
 
   void setAlignMode(int alignX, int alignY) {
@@ -56,7 +66,9 @@ class Label extends PositionedElement {
   
   void setDisplayText(String displayText) {
     this.displayText = displayText;
-    adjustLabelSize();
+    if (size.x > 0.0) {
+      adjustLabelSize();
+    }
   }
 
   void render() {
