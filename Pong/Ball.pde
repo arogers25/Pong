@@ -108,6 +108,9 @@ class Ball extends GameObject { //<>//
       float deflectAngle = map(ballCenter.y - paddlePos.y, 0.0, paddleSize.y, -MAX_DEFLECT_ANGLE, MAX_DEFLECT_ANGLE);
       float fixedAngle = constrain(deflectAngle, -MAX_DEFLECT_ANGLE, MAX_DEFLECT_ANGLE);
       boolean flipDirection = (pos.x - paddlePos.x) < 0.0; // Direction is flipped after creating angle so it can be constrained
+      float yAdjust = collidedPaddle.getYAdjust();
+      float constrainedYAdjust = yAdjust != 0.0 ? constrain(collidedPaddle.getYAdjust(), -1.5, 2.0) : 1.0;
+      adjustSpeed(constrainedYAdjust * direction.y * speedInc);
       setAngle(fixedAngle);
       if (flipDirection) {
         direction.x = -direction.x;
@@ -115,17 +118,12 @@ class Ball extends GameObject { //<>//
       if ((-collidedPaddle.getYAdjust() * direction.y) > 0.0) {
         direction.y = -direction.y;
       }
-      if (collidedPaddle.getYAdjust() != 0.0) {
-        float constrainedYAdjust = constrain(collidedPaddle.getYAdjust(), -1.5, 2.0);
-        adjustSpeed(constrainedYAdjust * -direction.y * speedInc);
-      } else {
-        adjustSpeed(speedInc);
-      }
       collisionHandled = true;
     } else {
       if (collidedPaddle.getYAdjust() != 0) {
         adjustSpeed(abs(collidedPaddle.getYAdjust()) * speedInc * 0.5);
       }
+      pos.add(0.5 * direction.x * speed * deltaTime, 0.5 * direction.y * speed * deltaTime);
     }
   }
 }

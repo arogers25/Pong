@@ -9,10 +9,10 @@ class ScoreZone extends PositionedElement {
   }
   
   void render() {
-    pushStyle();
+    /*pushStyle();
     fill(255, 100);
     rect(pos.x, pos.y, size.x, size.y);
-    popStyle();
+    popStyle();*/
   }
   
   void doInput() {

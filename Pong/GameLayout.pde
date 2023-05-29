@@ -2,6 +2,7 @@ class GameLayout extends Layout {
   Paddle leftPaddle, rightPaddle;
   ScoreZone leftScoreZone, rightScoreZone;
   Ball ball;
+  final float BALL_RADIUS = height / 30.0;
   
   GameLayout() {
     super();
@@ -12,9 +13,11 @@ class GameLayout extends Layout {
     addElement(leftPaddle);
     rightPaddle = new Paddle(new PVector(width * (5.0 / 6.0) - paddleOffsetX, startingPaddleY), paddleSize, UP, DOWN);
     addElement(rightPaddle);
-    leftScoreZone = new ScoreZone(0, new PVector(0.0, 0.0), new PVector(width / 8.0, height));
+    final float ZONE_WIDTH = width / 8.0;
+    final float ZONE_X = ZONE_WIDTH + BALL_RADIUS;
+    leftScoreZone = new ScoreZone(0, new PVector(-ZONE_X, 0.0), new PVector(ZONE_WIDTH, height));
     addElement(leftScoreZone);
-    rightScoreZone = new ScoreZone(1, new PVector(width * (7.0 / 8.0), 0.0), new PVector(width / 8.0, height));
+    rightScoreZone = new ScoreZone(1, new PVector(width + ZONE_X, 0.0) , new PVector(ZONE_WIDTH, height));
     addElement(rightScoreZone);
     final float startAngle = PI / 1.5;
     createBall(startAngle);
@@ -35,7 +38,7 @@ class GameLayout extends Layout {
   }
   
   private void createBall(float angle) {
-    ball = new Ball(currentStyle.center.copy(), height / 30.0, leftPaddle, rightPaddle);
+    ball = new Ball(currentStyle.center.copy(), BALL_RADIUS, leftPaddle, rightPaddle);
     ball.setAngle(angle);
     leftScoreZone.setTargetBall(ball);
     rightScoreZone.setTargetBall(ball);
