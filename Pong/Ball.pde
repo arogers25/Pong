@@ -35,9 +35,13 @@ class Ball extends GameObject { //<>//
   void setAngle(float angle) {
     this.direction.set(PVector.fromAngle(angle));
   }
+  
+  void setSpeed(float speed) {
+    super.setSpeed(constrain(speed, minSpeed, maxSpeed));
+  }
 
   void adjustSpeed(float adjust) {
-    setSpeed(constrain(speed + adjust, minSpeed, maxSpeed));
+    setSpeed(speed + adjust);
   }
 
   void doInput() {

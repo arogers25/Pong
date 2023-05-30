@@ -17,12 +17,11 @@ class GameLayout extends Layout {
     rightPaddle = new Paddle(new PVector(width * (5.0 / 6.0) - paddleOffsetX, startingPaddleY), paddleSize, UP, DOWN);
     addElement(rightPaddle);
     final float ZONE_WIDTH = width / 8.0;
-    final float ZONE_X = ZONE_WIDTH + BALL_RADIUS;
-    leftScoreZone = new ScoreZone(0, new PVector(-ZONE_X, 0.0), new PVector(ZONE_WIDTH, height));
+    resetBall(BALL_START_ANGLE);
+    leftScoreZone = new ScoreZone(0, ball, new PVector(-(ZONE_WIDTH + BALL_RADIUS), 0.0), new PVector(ZONE_WIDTH, height));
     addElement(leftScoreZone);
-    rightScoreZone = new ScoreZone(1, new PVector(width + ZONE_X, 0.0) , new PVector(ZONE_WIDTH, height));
+    rightScoreZone = new ScoreZone(1, ball, new PVector(width + BALL_RADIUS, 0.0) , new PVector(ZONE_WIDTH, height));
     addElement(rightScoreZone);
-    createBall(BALL_START_ANGLE);
     leftScoreLabel = new Label("0", new PVector(width * (2.0 / 6.0), height / 7.0), new PVector(0.0, height / 7.0), color(255), RIGHT, BOTTOM);
     addElement(leftScoreLabel);
     rightScoreLabel = new Label("0", new PVector(width * (4.0 / 6.0), height / 7.0), new PVector(0.0, height / 7.0), color(255), RIGHT, BOTTOM);
@@ -30,7 +29,26 @@ class GameLayout extends Layout {
   }
   
   void update() {
+    updateScore();
     super.update();
+  }
+  
+  protected final void drawBackground() {
+    background(currentStyle.black);
+  }
+  
+  private void resetBall(float angle) {
+    if (ball == null) {
+      ball = new Ball(currentStyle.center.copy(), BALL_RADIUS, leftPaddle, rightPaddle);
+      addElement(ball);
+    } else {
+      ball.setSpeed(0.0); // Reset the ball's speed to its minimum
+      ball.setPos(currentStyle.center);
+    }
+    ball.setAngle(angle);
+  }
+  
+  private void updateScore() {
     int scored = max(leftScoreZone.hasBallEntered(), rightScoreZone.hasBallEntered());
     if (scored != -1) {
       float angle = (scored == 0 ? BALL_START_ANGLE : BALL_START_ANGLE / 2.0);
@@ -41,19 +59,7 @@ class GameLayout extends Layout {
         rightScore++;
         rightScoreLabel.setDisplayText(str(rightScore));
       }
-      createBall(angle);
+      resetBall(angle);
     }
-    ball.update();
-  }
-  
-  protected final void drawBackground() {
-    background(currentStyle.black);
-  }
-  
-  private void createBall(float angle) {
-    ball = new Ball(currentStyle.center.copy(), BALL_RADIUS, leftPaddle, rightPaddle);
-    ball.setAngle(angle);
-    leftScoreZone.setTargetBall(ball);
-    rightScoreZone.setTargetBall(ball);
   }
 }

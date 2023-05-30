@@ -3,9 +3,10 @@ class ScoreZone extends PositionedElement {
   private int side;
   private boolean entered;
   
-  ScoreZone(int side, PVector pos, PVector size) {
+  ScoreZone(int side, Ball targetBall, PVector pos, PVector size) {
     super(pos, size);
     this.side = side;
+    this.targetBall = targetBall;
   }
   
   void render() {
@@ -27,13 +28,6 @@ class ScoreZone extends PositionedElement {
   
   int hasBallEntered() {
     return entered ? side : -1;
-  }
-  
-  void setTargetBall(Ball targetBall) {
-    if (targetBall == null) {
-      return;
-    }
-    this.targetBall = targetBall;
   }
   
   void update() {
