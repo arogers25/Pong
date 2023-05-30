@@ -7,9 +7,9 @@ class Ball extends GameObject { //<>//
 
   Ball(PVector pos, float radius, Paddle... targetPaddles) {
     super(pos, new PVector(radius, radius));
-    this.minSpeed = (width / size.x) * 10.0;
-    this.maxSpeed = (width / size.x) * 15.0;
-    this.speedInc = (width / size.x) * 2.0;
+    this.minSpeed = (height - size.y) / 2.0;
+    this.maxSpeed = (height - size.y) * (3.5 / 4.0);
+    this.speedInc = (height - size.y) / 10.0;
     this.speed = minSpeed;
     this.col = currentStyle.white;
     this.radius = radius;
