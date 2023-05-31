@@ -1,11 +1,11 @@
 class ScoreZone extends PositionedElement {
   private Ball targetBall;
-  private int side;
+  Player controllingPlayer;
   private boolean entered;
   
-  ScoreZone(int side, Ball targetBall, PVector pos, PVector size) {
+  ScoreZone(Player controllingPlayer, Ball targetBall, PVector pos, PVector size) {
     super(pos, size);
-    this.side = side;
+    this.controllingPlayer = controllingPlayer;
     this.targetBall = targetBall;
   }
   
@@ -26,8 +26,12 @@ class ScoreZone extends PositionedElement {
     return (ballMaxs.x >= pos.x && ballPos.x <= maxs.x && ballMaxs.y >= pos.y && ballPos.y <= maxs.y);
   }
   
-  int hasBallEntered() {
-    return entered ? side : -1;
+  boolean hasEntered() {
+    return entered;
+  }
+  
+  Player getControllingPlayer() {
+    return controllingPlayer;
   }
   
   void update() {

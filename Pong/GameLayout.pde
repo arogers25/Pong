@@ -1,6 +1,6 @@
 class GameLayout extends Layout {
-  Paddle leftPaddle, rightPaddle;
   Player leftPlayer, rightPlayer;
+  Paddle leftPaddle, rightPaddle;
   ScoreZone leftScoreZone, rightScoreZone;
   Ball ball;
   final float BALL_RADIUS = height / 30.0;
@@ -8,23 +8,7 @@ class GameLayout extends Layout {
   
   GameLayout() {
     super();
-    leftPlayer = new Player('W', 'S');
-    rightPlayer = new Player(UP, DOWN);
-    PVector paddleSize = new PVector(height / 25.0, height / 7.0);
-    float paddleOffsetX =  (paddleSize.x / 2.0);
-    float startingPaddleY = currentStyle.center.y - (paddleSize.y / 2.0);
-    leftPaddle = new Paddle(leftPlayer, new PVector(width * (1.0 / 6.0) - paddleOffsetX, startingPaddleY), paddleSize);
-    addElement(leftPaddle);
-    rightPaddle = new Paddle(rightPlayer, new PVector(width * (5.0 / 6.0) - paddleOffsetX, startingPaddleY), paddleSize);
-    addElement(rightPaddle);
-    final float ZONE_WIDTH = width / 8.0;
-    resetBall(BALL_START_ANGLE);
-    ScoreBoard testScoreBoard = new ScoreBoard(new PVector(0.0, height / 7.0), new PVector(width, height), width * (2.0 / 6.0), leftPlayer, rightPlayer);
-    addElement(testScoreBoard);
-    leftScoreZone = new ScoreZone(0, ball, new PVector(-(ZONE_WIDTH + BALL_RADIUS), 0.0), new PVector(ZONE_WIDTH, height));
-    addElement(leftScoreZone);
-    rightScoreZone = new ScoreZone(1, ball, new PVector(width + BALL_RADIUS, 0.0) , new PVector(ZONE_WIDTH, height));
-    addElement(rightScoreZone);
+    createGameObjects();
   }
   
   void update() {
@@ -47,16 +31,60 @@ class GameLayout extends Layout {
     ball.setAngle(angle);
   }
   
-  private void updateScore() {
-    int scored = max(leftScoreZone.hasBallEntered(), rightScoreZone.hasBallEntered());
-    if (scored != -1) {
-      float angle = (scored == 0 ? BALL_START_ANGLE : BALL_START_ANGLE / 2.0);
-      if (scored == 1) {
-        leftPlayer.score++;
-      } else {
-        rightPlayer.score++;
-      }
-      resetBall(angle);
+  private Player getScoringPlayer() { // The Player whose ScoreZone has been entered is the opposite of the one who hit the ball
+    Player scoringPlayer;
+    if (leftScoreZone.hasEntered()) {
+      return rightScoreZone.getControllingPlayer();
     }
+    if (rightScoreZone.hasEntered()) {
+      return leftScoreZone.getControllingPlayer();
+    }
+    return null;
+  }
+  
+  private void updateScore() {
+    Player scoringPlayer = getScoringPlayer();
+    if (scoringPlayer == null) {
+      return;
+    }
+    float angle = scoringPlayer.getResetAngle();
+    scoringPlayer.increaseScore(1);
+    resetBall(angle);
+  }
+  
+  private void createPlayers() {
+    leftPlayer = new Player('W', 'S', BALL_START_ANGLE);
+    rightPlayer = new Player(UP, DOWN, BALL_START_ANGLE / 2.0);
+  }
+  
+  private void createPaddles() {
+    PVector paddleSize = new PVector(height / 25.0, height / 7.0);
+    float paddleOffsetX =  (paddleSize.x / 2.0);
+    float startingPaddleY = currentStyle.center.y - (paddleSize.y / 2.0);
+    leftPaddle = new Paddle(leftPlayer, new PVector(width * (1.0 / 6.0) - paddleOffsetX, startingPaddleY), paddleSize);
+    addElement(leftPaddle);
+    rightPaddle = new Paddle(rightPlayer, new PVector(width * (5.0 / 6.0) - paddleOffsetX, startingPaddleY), paddleSize);
+    addElement(rightPaddle);
+  }
+  
+  private void createScoreZones() {
+    final float ZONE_WIDTH = width / 8.0;
+    leftScoreZone = new ScoreZone(leftPlayer, ball, new PVector(-(ZONE_WIDTH + BALL_RADIUS), 0.0), new PVector(ZONE_WIDTH, height));
+    addElement(leftScoreZone);
+    rightScoreZone = new ScoreZone(rightPlayer, ball, new PVector(width + BALL_RADIUS, 0.0) , new PVector(ZONE_WIDTH, height));
+    addElement(rightScoreZone);
+  }
+  
+  private void createScoreBoard() {
+    ScoreBoard testScoreBoard = new ScoreBoard(new PVector(0.0, height / 7.0), new PVector(width, height), width * (2.0 / 6.0), leftPlayer, rightPlayer);
+    addElement(testScoreBoard);
+  }
+  
+  private void createGameObjects() {
+    createPlayers();
+    createPaddles();
+    resetBall(BALL_START_ANGLE);
+    createScoreZones();
+    createScoreBoard();
   }
 }
