@@ -1,11 +1,10 @@
 class Paddle extends GameObject {
-  private int upKey, downKey;
+  private Player controllingPlayer;
   private float directionY, yAdjust;
   
-  Paddle(PVector pos, PVector size, int upKey, int downKey) {
+  Paddle(Player controllingPlayer, PVector pos, PVector size) {
     super(pos, size);
-    this.upKey = upKey;
-    this.downKey = downKey;
+    this.controllingPlayer = controllingPlayer;
     final float paddleSpeedMultiplier = 1.0; // How long it takes for the paddle to move across the entire screen in seconds
     speed = (height - size.y) / paddleSpeedMultiplier;
     col = currentStyle.white;
@@ -19,12 +18,14 @@ class Paddle extends GameObject {
   }
   
   void doInput() {
+    controllingPlayer.updateInput();
     directionY = 0.0;
-    if (Input.isKeyHeld(upKey) && pos.y > 0) {
+    int heldKey = controllingPlayer.getHeldKey();
+    if (heldKey == UP && pos.y > 0) {
       directionY = -1.0;
     }
     float paddleMaxY = pos.y + size.y;
-    if (Input.isKeyHeld(downKey) && paddleMaxY < height && directionY == 0.0) {
+    if (heldKey == DOWN && paddleMaxY < height && directionY == 0.0) {
       directionY = 1.0;
     }
     yAdjust = directionY * speed * deltaTime;

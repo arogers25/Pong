@@ -8,14 +8,14 @@ class GameLayout extends Layout {
   
   GameLayout() {
     super();
-    leftPlayer = new Player();
-    rightPlayer = new Player();
+    leftPlayer = new Player('W', 'S');
+    rightPlayer = new Player(UP, DOWN);
     PVector paddleSize = new PVector(height / 25.0, height / 7.0);
     float paddleOffsetX =  (paddleSize.x / 2.0);
     float startingPaddleY = currentStyle.center.y - (paddleSize.y / 2.0);
-    leftPaddle = new Paddle(new PVector(width * (1.0 / 6.0) - paddleOffsetX, startingPaddleY), paddleSize, 'W', 'S');
+    leftPaddle = new Paddle(leftPlayer, new PVector(width * (1.0 / 6.0) - paddleOffsetX, startingPaddleY), paddleSize);
     addElement(leftPaddle);
-    rightPaddle = new Paddle(new PVector(width * (5.0 / 6.0) - paddleOffsetX, startingPaddleY), paddleSize, UP, DOWN);
+    rightPaddle = new Paddle(rightPlayer, new PVector(width * (5.0 / 6.0) - paddleOffsetX, startingPaddleY), paddleSize);
     addElement(rightPaddle);
     final float ZONE_WIDTH = width / 8.0;
     resetBall(BALL_START_ANGLE);
