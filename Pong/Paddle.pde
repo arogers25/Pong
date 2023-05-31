@@ -5,9 +5,9 @@ class Paddle extends GameObject {
   Paddle(Player controllingPlayer, PVector pos, PVector size) {
     super(pos, size);
     this.controllingPlayer = controllingPlayer;
+    setCol(controllingPlayer.getCol());
     final float paddleSpeedMultiplier = 1.0; // How long it takes for the paddle to move across the entire screen in seconds
     speed = (height - size.y) / paddleSpeedMultiplier;
-    col = currentStyle.white;
   }
   
   void render() {

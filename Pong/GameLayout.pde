@@ -53,8 +53,8 @@ class GameLayout extends Layout {
   }
   
   private void createPlayers() {
-    leftPlayer = new Player('W', 'S', BALL_START_ANGLE);
-    rightPlayer = new Player(UP, DOWN, BALL_START_ANGLE / 2.0);
+    leftPlayer = new Player('W', 'S', BALL_START_ANGLE, color(255));
+    rightPlayer = new Player(UP, DOWN, BALL_START_ANGLE / 2.0, color(255));
   }
   
   private void createPaddles() {
