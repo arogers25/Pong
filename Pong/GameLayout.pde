@@ -53,8 +53,8 @@ class GameLayout extends Layout {
   }
   
   private void createPlayers() {
-    leftPlayer = new Player('W', 'S', BALL_START_ANGLE, color(255));
-    rightPlayer = new Player(UP, DOWN, BALL_START_ANGLE / 2.0, color(255));
+    leftPlayer = new Player('W', 'S', BALL_START_ANGLE / 2.0, color(255));
+    rightPlayer = new Player(UP, DOWN, BALL_START_ANGLE, color(255));
   }
   
   private void createPaddles() {
@@ -76,7 +76,7 @@ class GameLayout extends Layout {
   }
   
   private void createScoreBoard() {
-    ScoreBoard testScoreBoard = new ScoreBoard(new PVector(0.0, height / 7.0), new PVector(width, height), width * (2.0 / 6.0), leftPlayer, rightPlayer);
+    ScoreBoard testScoreBoard = new ScoreBoard(new PVector(0.0, height / 7.0), new PVector(width, height), width * (1.5 / 6.0), leftPlayer, rightPlayer);
     addElement(testScoreBoard);
   }
   
