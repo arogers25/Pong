@@ -1,6 +1,6 @@
 class ScoreZone extends PositionedElement {
   private Ball targetBall;
-  Player controllingPlayer;
+  private Player controllingPlayer;
   private boolean entered;
   
   ScoreZone(Player controllingPlayer, Ball targetBall, PVector pos, PVector size) {

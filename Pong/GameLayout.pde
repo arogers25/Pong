@@ -1,10 +1,11 @@
 class GameLayout extends Layout {
-  Player leftPlayer, rightPlayer;
-  Paddle leftPaddle, rightPaddle;
-  ScoreZone leftScoreZone, rightScoreZone;
-  Ball ball;
-  final float BALL_RADIUS = height / 30.0;
-  final float BALL_START_ANGLE = radians(120.0);
+  private Player leftPlayer, rightPlayer;
+  private Paddle leftPaddle, rightPaddle;
+  private ScoreZone leftScoreZone, rightScoreZone;
+  private ScoreBoard scoreBoard;
+  private Ball ball;
+  private final float BALL_RADIUS = height / 30.0;
+  private final float BALL_START_ANGLE = radians(120.0);
   
   GameLayout() {
     super();
@@ -49,6 +50,7 @@ class GameLayout extends Layout {
     }
     float angle = scoringPlayer.getResetAngle();
     scoringPlayer.increaseScore(1);
+    scoreBoard.updateScore();
     resetBall(angle);
   }
   
@@ -76,7 +78,8 @@ class GameLayout extends Layout {
   }
   
   private void createScoreBoard() {
-    ScoreBoard testScoreBoard = new ScoreBoard(new PVector(0.0, height / 7.0), new PVector(width, height), width * (1.5 / 6.0), leftPlayer, rightPlayer);
+    scoreBoard = new ScoreBoard(new PVector(0.0, height / 7.0), new PVector(width, height), width * (1.5 / 6.0), leftPlayer, rightPlayer);
+    scoreBoard.updateScore();
     addElement(testScoreBoard);
   }
   

@@ -1,8 +1,8 @@
 class ScoreBoard extends PositionedElement {
-  float edgeOffsetX = 0.0;
-  final float defaultTextHeight = height / 7.0;
-  Label leftScoreLabel, rightScoreLabel;
-  Player leftPlayer, rightPlayer;
+  private float edgeOffsetX = 0.0;
+  private final float defaultTextHeight = height / 7.0;
+  private Label leftScoreLabel, rightScoreLabel;
+  private Player leftPlayer, rightPlayer;
   
   ScoreBoard(PVector pos, PVector size, float edgeOffsetX, Player leftPlayer, Player rightPlayer) {
     super(pos, size);
@@ -14,9 +14,7 @@ class ScoreBoard extends PositionedElement {
   }
   
   private void updateScoreLabels() {
-    leftScoreLabel.setDisplayText(str(leftPlayer.score));
     leftScoreLabel.update();
-    rightScoreLabel.setDisplayText(str(rightPlayer.score));
     rightScoreLabel.update();
   }
   
@@ -27,5 +25,10 @@ class ScoreBoard extends PositionedElement {
   }
   
   void doInput() {
+  }
+  
+  void updateScore() {
+    leftScoreLabel.setDisplayText(str(leftPlayer.score));
+    rightScoreLabel.setDisplayText(str(rightPlayer.score));
   }
 }
