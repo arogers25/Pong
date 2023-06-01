@@ -4,6 +4,8 @@ class GameLayout extends Layout {
   private ScoreZone leftScoreZone, rightScoreZone;
   private ScoreBoard scoreBoard;
   private Ball ball;
+  private color backgroundCol = currentStyle.black, newCol = backgroundCol;
+  private float colorProgress = 0.0;
   private final float BALL_RADIUS = height / 30.0;
   private final float BALL_START_ANGLE = radians(120.0);
   
@@ -18,7 +20,15 @@ class GameLayout extends Layout {
   }
   
   protected final void drawBackground() {
-    background(currentStyle.black);
+    if (backgroundCol != currentStyle.black) {
+      final float COLOR_SPEED_MULT = 2.0;
+      colorProgress += deltaTime * COLOR_SPEED_MULT;
+      backgroundCol = lerpColor(newCol, currentStyle.black, colorProgress);
+    } else {
+      colorProgress = 0.0;
+      newCol = currentStyle.black;
+    }
+    background(backgroundCol);
   }
   
   private void resetBall(float angle) {
@@ -51,12 +61,15 @@ class GameLayout extends Layout {
     float angle = scoringPlayer.getResetAngle();
     scoringPlayer.increaseScore(1);
     scoreBoard.updateScore();
+    newCol = scoringPlayer.getCol();
+    final float STARTING_COLOR_PROGRESS = 0.7;
+    backgroundCol = lerpColor(newCol, currentStyle.black, STARTING_COLOR_PROGRESS);
     resetBall(angle);
   }
   
   private void createPlayers() {
-    leftPlayer = new Player('W', 'S', BALL_START_ANGLE / 2.0, color(255));
-    rightPlayer = new Player(UP, DOWN, BALL_START_ANGLE, color(255));
+    leftPlayer = new Player('W', 'S', BALL_START_ANGLE / 2.0, color(255, 0, 0));
+    rightPlayer = new Player(UP, DOWN, BALL_START_ANGLE, color(0, 0, 255));
   }
   
   private void createPaddles() {
@@ -80,7 +93,7 @@ class GameLayout extends Layout {
   private void createScoreBoard() {
     scoreBoard = new ScoreBoard(new PVector(0.0, height / 7.0), new PVector(width, height), width * (1.5 / 6.0), leftPlayer, rightPlayer);
     scoreBoard.updateScore();
-    addElement(testScoreBoard);
+    addElement(scoreBoard);
   }
   
   private void createGameObjects() {
