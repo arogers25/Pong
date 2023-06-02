@@ -4,13 +4,14 @@ class GameLayout extends Layout {
   private ScoreZone leftScoreZone, rightScoreZone;
   private ScoreBoard scoreBoard;
   private Ball ball;
-  private color backgroundCol = currentStyle.black, newCol = backgroundCol;
-  private float colorProgress = 0.0;
+  LerpColor backgroundCol;
   private final float BALL_RADIUS = height / 30.0;
   private final float BALL_START_ANGLE = radians(120.0);
   
   GameLayout() {
     super();
+    final float LERP_TIME_MULT = 0.5;
+    backgroundCol = new LerpColor(currentStyle.black, LERP_TIME_MULT);
     createGameObjects();
   }
   
@@ -20,15 +21,10 @@ class GameLayout extends Layout {
   }
   
   protected final void drawBackground() {
-    if (backgroundCol != currentStyle.black) {
-      final float COLOR_SPEED_MULT = 2.0;
-      colorProgress += deltaTime * COLOR_SPEED_MULT;
-      backgroundCol = lerpColor(newCol, currentStyle.black, colorProgress);
-    } else {
-      colorProgress = 0.0;
-      newCol = currentStyle.black;
+    if (backgroundCol.shouldUpdate()) {
+      backgroundCol.updateLerp();
     }
-    background(backgroundCol);
+    background(backgroundCol.getCol());
   }
   
   private void resetBall(float angle) {
@@ -61,9 +57,8 @@ class GameLayout extends Layout {
     float angle = scoringPlayer.getResetAngle();
     scoringPlayer.increaseScore(1);
     scoreBoard.updateScore();
-    newCol = scoringPlayer.getCol();
-    final float STARTING_COLOR_PROGRESS = 0.7;
-    backgroundCol = lerpColor(newCol, currentStyle.black, STARTING_COLOR_PROGRESS);
+    final float STARTING_COLOR_PROGRESS = 0.3;
+    backgroundCol.startLerp(scoringPlayer.getCol(), STARTING_COLOR_PROGRESS);
     resetBall(angle);
   }
   
