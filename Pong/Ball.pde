@@ -103,6 +103,7 @@ class Ball extends GameObject { //<>//
       collisionHandled = false;
       return;
     }
+    collidedPaddle.onCollide();
     if (!collisionHandled) {
       PVector paddlePos = collidedPaddle.getPos();
       PVector paddleSize = collidedPaddle.getSize();

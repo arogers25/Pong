@@ -1,6 +1,7 @@
 class Paddle extends GameObject {
   private Player controllingPlayer;
   private float directionY, yAdjust;
+  private LerpColor bounceEffectCol;
   
   Paddle(Player controllingPlayer, PVector pos, PVector size) {
     super(pos, size);
@@ -8,12 +9,19 @@ class Paddle extends GameObject {
     setCol(controllingPlayer.getCol());
     final float paddleSpeedMultiplier = 1.0; // How long it takes for the paddle to move across the entire screen in seconds
     speed = (height - size.y) / paddleSpeedMultiplier;
+    final float LERP_TIME_MULT = 1.0;
+    bounceEffectCol = new LerpColor(color(255, 0), LERP_TIME_MULT);
   }
   
   void render() {
     pushStyle();
     fill(col);
     rect(pos.x, pos.y, size.x, size.y);
+    if (bounceEffectCol.shouldUpdate()) {
+      bounceEffectCol.updateLerp();
+      fill(bounceEffectCol.getCol());
+      rect(pos.x, pos.y, size.x, size.y);
+    }
     popStyle();
   }
   
@@ -33,6 +41,11 @@ class Paddle extends GameObject {
   
   float getYAdjust() {
     return yAdjust;
+  }
+  
+  void onCollide() {
+    final float STARTING_COLOR_PROGRESS = 0.3;
+    bounceEffectCol.startLerp(currentStyle.white, STARTING_COLOR_PROGRESS);
   }
   
   void gameTick() {
