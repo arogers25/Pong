@@ -9,8 +9,9 @@ class ScoreBoard extends PositionedElement {
     this.edgeOffsetX = edgeOffsetX;
     this.leftPlayer = leftPlayer;
     this.rightPlayer = rightPlayer;
-    leftScoreLabel = new Label("0", new PVector(edgeOffsetX, pos.y), new PVector(0.0, defaultTextHeight), leftPlayer.getCol(), LEFT, BOTTOM);
-    rightScoreLabel = new Label("0", new PVector(width - edgeOffsetX, pos.y), new PVector(0.0, defaultTextHeight), rightPlayer.getCol(), RIGHT, BOTTOM);
+    PFont scoreFont = currentStyle.lightFont;
+    leftScoreLabel = new Label(scoreFont, "0", new PVector(edgeOffsetX, pos.y), new PVector(0.0, defaultTextHeight), leftPlayer.getCol(), LEFT, BOTTOM);
+    rightScoreLabel = new Label(scoreFont, "0", new PVector(width - edgeOffsetX, pos.y), new PVector(0.0, defaultTextHeight), rightPlayer.getCol(), RIGHT, BOTTOM);
   }
   
   private void updateScoreLabels() {

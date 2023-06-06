@@ -1,21 +1,24 @@
 class Label extends PositionedElement {
   private String displayText;
+  private PFont displayFont;
   private float adjustedTextSize;
   private PVector adjustedPos;
   private color col;
   private int alignX, alignY;
   private boolean hasAdjustedPos = false;
 
-  Label(String displayText, PVector pos, PVector size, color col, int alignX, int alignY) {
+  Label(PFont displayFont, String displayText, PVector pos, PVector size, color col, int alignX, int alignY) {
     super(pos, size);
+    this.displayFont = displayFont;
     setDisplayText(displayText);
     this.col = col;
     adjustLabelSize();
     setAlignMode(alignX, alignY);
   }
 
-  Label(String displayText, PVector pos, PVector size, color col) {
+  Label(PFont displayFont, String displayText, PVector pos, PVector size, color col) {
     super(pos, size);
+    this.displayFont = displayFont;
     setDisplayText(displayText);
     this.col = col;
     adjustLabelSize();
@@ -29,6 +32,7 @@ class Label extends PositionedElement {
     final float STARTING_SCALE_FACTOR = 0.60;
     final float SCALE_FIT_PERCENTAGE = 0.80;
     pushStyle();
+    textFont(displayFont);
     adjustedTextSize = size.y * STARTING_SCALE_FACTOR;
     textSize(adjustedTextSize);
     if (size.x > 0.0) {
@@ -77,6 +81,7 @@ class Label extends PositionedElement {
     }
     pushStyle();
     fill(col);
+    textFont(displayFont);
     textSize(adjustedTextSize);
     textAlign(alignX, alignY);
     updateAdjustedPos();

@@ -1,9 +1,9 @@
 class RectangleButton extends Button {
   Label label;
   
-  RectangleButton(String labelText, PVector pos, PVector size, color col, color textCol, String clickMethodName, Object... clickArgs) {
+  RectangleButton(PFont displayFont, String labelText, PVector pos, PVector size, color col, color textCol, String clickMethodName, Object... clickArgs) {
     super(labelText, pos, size, col, clickMethodName, clickArgs);
-    this.label = new Label(labelText, pos, size, textCol, CENTER, CENTER);
+    this.label = new Label(displayFont, labelText, pos, size, textCol, CENTER, CENTER);
     
   }
   
