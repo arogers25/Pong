@@ -1,31 +1,25 @@
 class Player {
+  private String name;
   private int score;
   private int upKey, downKey;
   private int heldKey;
   private color col;
   private float resetAngle; // The angle the ball will reset to if this Player scores
   
-  Player(int upKey, int downKey, float resetAngle, color col) {
+  Player(String name, int upKey, int downKey, float resetAngle, color col) {
+    this.name = name;
     this.upKey = upKey;
     this.downKey = downKey;
     this.resetAngle = resetAngle;
     this.col = col;
   }
   
-  void updateInput() {
-    if (Input.isKeyHeld(upKey)) {
-      heldKey = UP;
-      return;
-    }
-    if (Input.isKeyHeld(downKey)) {
-      heldKey = DOWN;
-      return;
-    }
-    heldKey = 0;
+  String getName() {
+    return name;
   }
   
-  int getHeldKey() {
-    return heldKey;
+  void setName(String name) {
+    this.name = name;
   }
   
   int getScore() {
@@ -46,6 +40,22 @@ class Player {
   
   float getResetAngle() {
     return resetAngle;
+  }
+  
+  void updateInput() {
+    if (Input.isKeyHeld(upKey)) {
+      heldKey = UP;
+      return;
+    }
+    if (Input.isKeyHeld(downKey)) {
+      heldKey = DOWN;
+      return;
+    }
+    heldKey = 0;
+  }
+  
+  int getHeldKey() {
+    return heldKey;
   }
   
   int getCol() {

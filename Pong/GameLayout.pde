@@ -4,7 +4,8 @@ class GameLayout extends Layout {
   private ScoreZone leftScoreZone, rightScoreZone;
   private ScoreBoard scoreBoard;
   private Ball ball;
-  LerpColor backgroundCol;
+  private GameOverLayout gameOverLayout;
+  private LerpColor backgroundCol;
   private final float BALL_RADIUS = height / 30.0;
   private final float BALL_START_ANGLE = radians(120.0);
   
@@ -18,6 +19,9 @@ class GameLayout extends Layout {
   void update() {
     updateScore();
     super.update();
+    if (gameOverLayout != null) {
+      gameOverLayout.update();
+    }
   }
   
   protected final void drawBackground() {
@@ -54,17 +58,24 @@ class GameLayout extends Layout {
     if (scoringPlayer == null) {
       return;
     }
+    final int MAX_SCORE = 10;
     float angle = scoringPlayer.getResetAngle();
-    scoringPlayer.increaseScore(1);
-    scoreBoard.updateScore();
+    if (gameOverLayout == null) {
+      scoringPlayer.increaseScore(1);
+      scoreBoard.updateScore();
+    }
+    if (scoringPlayer.getScore() >= MAX_SCORE) {
+      gameOverLayout = new GameOverLayout(scoringPlayer);
+      return;
+    }
     final float STARTING_COLOR_PROGRESS = 0.3;
     backgroundCol.startLerp(scoringPlayer.getCol(), STARTING_COLOR_PROGRESS);
     resetBall(angle);
   }
   
   private void createPlayers() {
-    leftPlayer = new Player('W', 'S', BALL_START_ANGLE / 2.0, color(255, 0, 0));
-    rightPlayer = new Player(UP, DOWN, BALL_START_ANGLE, color(0, 0, 255));
+    leftPlayer = new Player("Left", 'W', 'S', BALL_START_ANGLE / 2.0, color(255, 0, 0));
+    rightPlayer = new Player("Right", UP, DOWN, BALL_START_ANGLE, color(0, 0, 255));
   }
   
   private void createPaddles() {

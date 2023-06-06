@@ -2,6 +2,7 @@ class Label extends PositionedElement {
   private String displayText;
   private PFont displayFont;
   private float adjustedTextSize;
+  private float adjustedTextWidth;
   private PVector adjustedPos;
   private color col;
   private int alignX, alignY;
@@ -43,6 +44,7 @@ class Label extends PositionedElement {
         adjustedTextSize = targetWidthRatio * adjustedTextSize;
       }
     }
+    adjustedTextWidth = textWidth(displayText);
     popStyle();
   }
 
@@ -73,6 +75,10 @@ class Label extends PositionedElement {
     if (size.x > 0.0) {
       adjustLabelSize();
     }
+  }
+  
+  float getTextWidth() {
+    return adjustedTextWidth;
   }
 
   void render() {
