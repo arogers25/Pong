@@ -3,6 +3,7 @@ class Player {
   private int score;
   private int upKey, downKey;
   private int heldKey;
+  private boolean shouldInput = true;
   private color col;
   private float resetAngle; // The angle the ball will reset to if this Player scores
   
@@ -42,7 +43,15 @@ class Player {
     return resetAngle;
   }
   
+  void setShouldInput(boolean shouldInput) {
+    this.shouldInput = shouldInput;
+  }
+  
   void updateInput() {
+    heldKey = 0;
+    if (!shouldInput) {
+      return;
+    }
     if (Input.isKeyHeld(upKey)) {
       heldKey = UP;
       return;
@@ -51,7 +60,6 @@ class Player {
       heldKey = DOWN;
       return;
     }
-    heldKey = 0;
   }
   
   int getHeldKey() {

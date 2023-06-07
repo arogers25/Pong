@@ -68,6 +68,8 @@ class GameLayout extends Layout {
     int maxScore = gameSettings.maxScore;
     if (maxScore > 0 && scoringPlayer.getScore() >= maxScore) {
       gameOverLayout = new GameOverLayout(gameSettings, scoringPlayer);
+      leftPlayer.setShouldInput(false);
+      rightPlayer.setShouldInput(false);
       return;
     }
     final float STARTING_COLOR_PROGRESS = 0.3;
