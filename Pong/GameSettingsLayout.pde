@@ -1,5 +1,7 @@
 class GameSettingsLayout extends Layout {
-  ColorPicker leftColorPicker, rightColorPicker;
+  private ColorPicker leftColorPicker, rightColorPicker;
+  private Slider scoreSlider;
+  private Label maxScoreLabel;
   
   GameSettingsLayout() {
     super();
@@ -48,5 +50,16 @@ class GameSettingsLayout extends Layout {
     addElement(rightColorPicker);
     Label rightSideLabel = new Label(currentStyle.regularFont, "Right Side", PVector.sub(rightColorPickerPos, labelOffset), labelSize, currentStyle.white, CENTER, BOTTOM);
     addElement(rightSideLabel);
+    
+    PVector scoreSliderSize = new PVector(width / 3.0, menuButtonSize.y / 3.0);
+    PVector scoreSliderPos = new PVector(currentStyle.center.x - scoreSliderSize.x / 2.0, startGameButtonPos.y - scoreSliderSize.y * 2.0);
+    scoreSlider = new Slider(scoreSliderPos, scoreSliderSize, currentStyle.white, color(70), 7.0, 0.0, 30.0);
+    addElement(scoreSlider);
+    
+    PVector scoreSliderLabelPos = scoreSliderPos.copy();
+    scoreSliderLabelPos.x += textWidth("Max Score") / 5.0;
+    scoreSliderLabelPos.y -= menuButtonSize.y / 3.0;
+    maxScoreLabel = new Label(currentStyle.regularFont, "Max Score", scoreSliderLabelPos, new PVector(0.0, menuButtonSize.y), currentStyle.white);
+    addElement(maxScoreLabel);
   }
 }
