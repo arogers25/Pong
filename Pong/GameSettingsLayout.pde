@@ -34,12 +34,19 @@ class GameSettingsLayout extends Layout {
     
     float colorPickerY = height / 3.0;
     PVector colorPickerSize = new PVector(height / 5.0, height / 3.0);
+    PVector labelSize = new PVector(colorPickerSize.x * 2.0, height / 10.0);
+    PVector labelOffset = new PVector(colorPickerSize.x / 2.0, labelSize.y / 10.0);
     
-    leftColorPicker = new ColorPicker(currentStyle.defaultLeftPaddleCol, new PVector(width / 6.0, colorPickerY), colorPickerSize);
+    PVector leftColorPickerPos = new PVector(width / 6.0, colorPickerY);
+    leftColorPicker = new ColorPicker(currentStyle.defaultLeftPaddleCol, leftColorPickerPos, colorPickerSize);
     addElement(leftColorPicker);
+    Label leftSideLabel = new Label(currentStyle.regularFont, "Left Side", PVector.sub(leftColorPickerPos, labelOffset), labelSize, currentStyle.white, CENTER, BOTTOM);
+    addElement(leftSideLabel);
     
     PVector rightColorPickerPos = new PVector(width * (5.0 / 6.0) - colorPickerSize.x, colorPickerY);
     rightColorPicker = new ColorPicker(currentStyle.defaultRightPaddleCol, rightColorPickerPos, colorPickerSize);
     addElement(rightColorPicker);
+    Label rightSideLabel = new Label(currentStyle.regularFont, "Right Side", PVector.sub(rightColorPickerPos, labelOffset), labelSize, currentStyle.white, CENTER, BOTTOM);
+    addElement(rightSideLabel);
   }
 }
