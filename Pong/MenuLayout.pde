@@ -10,7 +10,7 @@ class MenuLayout extends Layout {
   }
   
   void onPlayButtonPressed() {
-    setCurrentLayout(new GameLayout());
+    setCurrentLayout(new GameSettingsLayout());
   }
   
   void onQuitButtonPressed() {
