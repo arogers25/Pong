@@ -1,5 +1,5 @@
 class GameSettingsLayout extends Layout {
-  ColorPicker leftColorPicker;
+  ColorPicker leftColorPicker, rightColorPicker;
   
   GameSettingsLayout() {
     super();
@@ -29,7 +29,14 @@ class GameSettingsLayout extends Layout {
     RectangleButton backToMenuButton = new RectangleButton(buttonFont, "Back to Menu", new PVector(), menuButtonSize, color(70), currentStyle.white, "onBackToMenuButtonPressed");
     addElement(backToMenuButton);
     
-    leftColorPicker = new ColorPicker(color(255, 0, 0), new PVector(100.0, 100.0), new PVector(200.0, 200.0));
+    float colorPickerY = height / 3.0;
+    PVector colorPickerSize = new PVector(height / 5.0, height / 3.0);
+    
+    leftColorPicker = new ColorPicker(color(255, 0, 0), new PVector(width / 6.0, colorPickerY), colorPickerSize);
     addElement(leftColorPicker);
+    
+    PVector rightColorPickerPos = new PVector(width * (5.0 / 6.0) - colorPickerSize.x, colorPickerY);
+    rightColorPicker = new ColorPicker(color(0, 0, 255), rightColorPickerPos, colorPickerSize);
+    addElement(rightColorPicker);
   }
 }

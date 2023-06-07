@@ -30,12 +30,12 @@ class ColorPicker extends PositionedElement {
   }
 
   private void addSliders() {
-    PVector sliderSize = new PVector(size.x, size.y / 8.0);
+    PVector sliderSize = new PVector(size.x, size.y / 12.0);
     PVector startingSliderPos = new PVector(pos.x, pos.y + size.y / 1.7);
 
     hueSlider = new Slider(startingSliderPos, sliderSize, currentStyle.white, color(70), hue(pickedCol), 0.0, 255.0);
     
-    PVector saturationSliderPos = new PVector(startingSliderPos.x, startingSliderPos.y + sliderSize.y * 1.5);
+    PVector saturationSliderPos = new PVector(startingSliderPos.x, startingSliderPos.y + sliderSize.y * 2.0);
     saturationSlider = new Slider(saturationSliderPos, sliderSize, currentStyle.white, color(70), saturation(pickedCol), 0.0, 255.0);
   }
 
