@@ -2,6 +2,7 @@ class GameSettingsLayout extends Layout {
   private ColorPicker leftColorPicker, rightColorPicker;
   private Slider scoreSlider;
   private Label maxScoreLabel;
+  private int maxScore;
   
   GameSettingsLayout() {
     super();
@@ -15,12 +16,17 @@ class GameSettingsLayout extends Layout {
   void onStartGameButtonPressed() {
     color leftPaddleCol = leftColorPicker.getPickedCol();
     color rightPaddleCol = rightColorPicker.getPickedCol();
-    GameSettings gameSettings = new GameSettings(leftPaddleCol, rightPaddleCol);
+    GameSettings gameSettings = new GameSettings(maxScore, leftPaddleCol, rightPaddleCol);
     currentLayout = new GameLayout(gameSettings);
   }
   
   void onBackToMenuButtonPressed() {
     currentLayout = new MenuLayout();
+  }
+  
+  void update() {
+    super.update();
+    updateMaxScoreLabel();
   }
   
   private void addMenuButtons() {
@@ -53,13 +59,18 @@ class GameSettingsLayout extends Layout {
     
     PVector scoreSliderSize = new PVector(width / 3.0, menuButtonSize.y / 3.0);
     PVector scoreSliderPos = new PVector(currentStyle.center.x - scoreSliderSize.x / 2.0, startGameButtonPos.y - scoreSliderSize.y * 2.0);
-    scoreSlider = new Slider(scoreSliderPos, scoreSliderSize, currentStyle.white, color(70), 7.0, 0.0, 30.0);
+    final float DEFAULT_MAX_SCORE = 7.0;
+    scoreSlider = new Slider(scoreSliderPos, scoreSliderSize, currentStyle.white, color(70), DEFAULT_MAX_SCORE, 0.0, 100.0);
     addElement(scoreSlider);
     
-    PVector scoreSliderLabelPos = scoreSliderPos.copy();
-    scoreSliderLabelPos.x += textWidth("Max Score") / 5.0;
-    scoreSliderLabelPos.y -= menuButtonSize.y / 3.0;
-    maxScoreLabel = new Label(currentStyle.regularFont, "Max Score", scoreSliderLabelPos, new PVector(0.0, menuButtonSize.y), currentStyle.white);
+    PVector scoreSliderLabelPos = new PVector(scoreSliderPos.x, scoreSliderPos.y - menuButtonSize.y);
+    maxScoreLabel = new Label(currentStyle.regularFont, "", scoreSliderLabelPos, new PVector(scoreSliderSize.x, menuButtonSize.y), currentStyle.white, CENTER, CENTER);
     addElement(maxScoreLabel);
+  }
+  
+  private void updateMaxScoreLabel() {
+    maxScore = (int)scoreSlider.getCurrentValue();
+    String scoreText = (maxScore == 0) ? "Infinite" : str(maxScore);
+    maxScoreLabel.setDisplayText("Max Score: " + scoreText);
   }
 }

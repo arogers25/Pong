@@ -1,7 +1,9 @@
 class GameSettings {
+  int maxScore;
   color leftPaddleCol, rightPaddleCol;
   
-  GameSettings(color leftPaddleCol, color rightPaddleCol) {
+  GameSettings(int maxScore, color leftPaddleCol, color rightPaddleCol) {
+    this.maxScore = maxScore;
     this.leftPaddleCol = leftPaddleCol;
     this.rightPaddleCol = rightPaddleCol;
   }

@@ -60,13 +60,13 @@ class GameLayout extends Layout {
     if (scoringPlayer == null) {
       return;
     }
-    final int MAX_SCORE = 10;
     float angle = scoringPlayer.getResetAngle();
     if (gameOverLayout == null) {
       scoringPlayer.increaseScore(1);
       scoreBoard.updateScore();
     }
-    if (scoringPlayer.getScore() >= MAX_SCORE) {
+    int maxScore = gameSettings.maxScore;
+    if (maxScore > 0 && scoringPlayer.getScore() >= maxScore) {
       gameOverLayout = new GameOverLayout(gameSettings, scoringPlayer);
       return;
     }
