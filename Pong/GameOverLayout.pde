@@ -1,9 +1,11 @@
 class GameOverLayout extends Layout {
+  private GameSettings gameSettings;
   private Player winner;
   private Label winnerLabel;
   
-  GameOverLayout(Player winner) {
+  GameOverLayout(GameSettings gameSettings, Player winner) {
     super();
+    this.gameSettings = gameSettings;
     this.winner = winner;
     addWinnerLabel();
     addOptionButtons();
@@ -17,7 +19,7 @@ class GameOverLayout extends Layout {
   }
   
   void onRestartButtonPressed() {
-    currentLayout = new GameLayout();
+    currentLayout = new GameLayout(gameSettings);
   }
   
   void onBackToMenuButtonPressed() {

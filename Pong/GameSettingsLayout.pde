@@ -11,7 +11,10 @@ class GameSettingsLayout extends Layout {
   }
   
   void onStartGameButtonPressed() {
-    currentLayout = new GameLayout();
+    color leftPaddleCol = leftColorPicker.getPickedCol();
+    color rightPaddleCol = rightColorPicker.getPickedCol();
+    GameSettings gameSettings = new GameSettings(leftPaddleCol, rightPaddleCol);
+    currentLayout = new GameLayout(gameSettings);
   }
   
   void onBackToMenuButtonPressed() {
@@ -32,11 +35,11 @@ class GameSettingsLayout extends Layout {
     float colorPickerY = height / 3.0;
     PVector colorPickerSize = new PVector(height / 5.0, height / 3.0);
     
-    leftColorPicker = new ColorPicker(color(255, 0, 0), new PVector(width / 6.0, colorPickerY), colorPickerSize);
+    leftColorPicker = new ColorPicker(currentStyle.defaultLeftPaddleCol, new PVector(width / 6.0, colorPickerY), colorPickerSize);
     addElement(leftColorPicker);
     
     PVector rightColorPickerPos = new PVector(width * (5.0 / 6.0) - colorPickerSize.x, colorPickerY);
-    rightColorPicker = new ColorPicker(color(0, 0, 255), rightColorPickerPos, colorPickerSize);
+    rightColorPicker = new ColorPicker(currentStyle.defaultRightPaddleCol, rightColorPickerPos, colorPickerSize);
     addElement(rightColorPicker);
   }
 }

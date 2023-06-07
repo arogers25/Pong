@@ -1,18 +1,20 @@
 class GameLayout extends Layout {
+  private GameSettings gameSettings;
+  private LerpColor backgroundCol;
   private Player leftPlayer, rightPlayer;
   private Paddle leftPaddle, rightPaddle;
   private ScoreZone leftScoreZone, rightScoreZone;
   private ScoreBoard scoreBoard;
   private Ball ball;
   private GameOverLayout gameOverLayout;
-  private LerpColor backgroundCol;
   private final float BALL_RADIUS = height / 30.0;
   private final float BALL_START_ANGLE = radians(120.0);
   
-  GameLayout() {
+  GameLayout(GameSettings gameSettings) {
     super();
     final float LERP_TIME_MULT = 0.5;
     backgroundCol = new LerpColor(currentStyle.black, LERP_TIME_MULT);
+    this.gameSettings = gameSettings;
     createGameObjects();
   }
   
@@ -65,7 +67,7 @@ class GameLayout extends Layout {
       scoreBoard.updateScore();
     }
     if (scoringPlayer.getScore() >= MAX_SCORE) {
-      gameOverLayout = new GameOverLayout(scoringPlayer);
+      gameOverLayout = new GameOverLayout(gameSettings, scoringPlayer);
       return;
     }
     final float STARTING_COLOR_PROGRESS = 0.3;
@@ -74,8 +76,8 @@ class GameLayout extends Layout {
   }
   
   private void createPlayers() {
-    leftPlayer = new Player("Left", 'W', 'S', BALL_START_ANGLE / 2.0, color(255, 0, 0));
-    rightPlayer = new Player("Right", UP, DOWN, BALL_START_ANGLE, color(0, 0, 255));
+    leftPlayer = new Player("Left", 'W', 'S', BALL_START_ANGLE / 2.0, gameSettings.leftPaddleCol);
+    rightPlayer = new Player("Right", UP, DOWN, BALL_START_ANGLE, gameSettings.rightPaddleCol);
   }
   
   private void createPaddles() {

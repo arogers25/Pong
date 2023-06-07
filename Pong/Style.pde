@@ -6,4 +6,7 @@ final class Style {
   
   final PFont regularFont = createFont("fonts/Rubik-Regular.ttf", 32);
   final PFont lightFont = createFont("fonts/Rubik-Light.ttf", 32);
+  
+  final color defaultLeftPaddleCol = color(255, 0, 0);
+  final color defaultRightPaddleCol = color(0, 0, 255);
 }
