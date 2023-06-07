@@ -1,4 +1,6 @@
 class GameSettingsLayout extends Layout {
+  ColorPicker leftColorPicker;
+  
   GameSettingsLayout() {
     super();
     addMenuButtons();
@@ -26,5 +28,8 @@ class GameSettingsLayout extends Layout {
     
     RectangleButton backToMenuButton = new RectangleButton(buttonFont, "Back to Menu", new PVector(), menuButtonSize, color(70), currentStyle.white, "onBackToMenuButtonPressed");
     addElement(backToMenuButton);
+    
+    leftColorPicker = new ColorPicker(color(255, 0, 0), new PVector(100.0, 100.0), new PVector(200.0, 200.0));
+    addElement(leftColorPicker);
   }
 }

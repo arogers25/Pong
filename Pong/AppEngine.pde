@@ -10,7 +10,6 @@ Layout currentLayout;
 void setupAppEngine() {
   Input.setAppInst(this);
   currentStyle = new Style();
-  ellipseMode(CORNER);
 }
 
 void setCurrentLayout(Layout currentLayout) {
