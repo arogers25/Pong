@@ -2,10 +2,10 @@ class Ball extends GameObject { //<>//
   private PVector direction;
   private float radius;
   private float minSpeed, maxSpeed, speedInc;
-  private Paddle[] targetPaddles;
+  private Paddle leftPaddle, rightPaddle;
   private boolean collisionHandled;
 
-  Ball(PVector pos, float radius, Paddle... targetPaddles) {
+  Ball(PVector pos, float radius, Paddle leftPaddle, Paddle rightPaddle) {
     super(pos, new PVector(radius, radius));
     this.minSpeed = (height - size.y) / 2.0;
     this.maxSpeed = (height - size.y) * (3.5 / 4.0);
@@ -14,7 +14,8 @@ class Ball extends GameObject { //<>//
     this.col = currentStyle.white;
     this.radius = radius;
     direction = new PVector();
-    this.targetPaddles = targetPaddles;
+    this.leftPaddle = leftPaddle;
+    this.rightPaddle = rightPaddle;
   }
 
   void render() {
@@ -86,14 +87,15 @@ class Ball extends GameObject { //<>//
     return PVector.dist(ballCenter, limitedBallCenter) <= HALF_RADIUS;
   }
 
-  private Paddle getCollidedPaddle() { // Using a for loop instead of individual if statements for collision allows for multiple custom paddles
-    if (targetPaddles == null) {
+  private Paddle getCollidedPaddle() {
+    if (leftPaddle == null || rightPaddle == null) {
       return null;
     }
-    for (Paddle paddle : targetPaddles) {
-      if (collidesWithPaddle(paddle)) {
-        return paddle;
-      }
+    if (collidesWithPaddle(leftPaddle)) {
+      return leftPaddle;
+    }
+    if (collidesWithPaddle(rightPaddle)) {
+      return rightPaddle;
     }
     return null;
   }
