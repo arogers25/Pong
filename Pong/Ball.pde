@@ -4,11 +4,12 @@ class Ball extends GameObject { //<>//
   private float minSpeed, maxSpeed, speedInc;
   private Paddle leftPaddle, rightPaddle;
   private boolean collisionHandled;
+  private int numBounces;
 
   Ball(PVector pos, float radius, Paddle leftPaddle, Paddle rightPaddle) {
     super(pos, new PVector(radius, radius));
     this.minSpeed = (height - size.y) / 2.0;
-    this.maxSpeed = (height - size.y) * (3.5 / 4.0);
+    this.maxSpeed = (height - size.y) * (3.7 / 4.0);
     this.speedInc = (height - size.y) / 10.0;
     this.speed = minSpeed;
     this.col = currentStyle.white;
@@ -41,6 +42,10 @@ class Ball extends GameObject { //<>//
   
   void setSpeed(float speed) {
     super.setSpeed(constrain(speed, minSpeed, maxSpeed));
+  }
+  
+  void setNumBounces(int numBounces) {
+    this.numBounces = numBounces;
   }
 
   void adjustSpeed(float adjust) {
@@ -117,6 +122,10 @@ class Ball extends GameObject { //<>//
       float deflectAngle = map(ballCenter.y - paddlePos.y, 0.0, paddleSize.y, -MAX_DEFLECT_ANGLE, MAX_DEFLECT_ANGLE);
       float fixedAngle = constrain(deflectAngle, -MAX_DEFLECT_ANGLE, MAX_DEFLECT_ANGLE);
       boolean flipDirection = (pos.x - paddlePos.x) < 0.0; // Direction is flipped after creating angle so it can be constrained
+      numBounces++;
+      final int BOUNCE_SPEED_ADJUST_START = 5;
+      int bounceSpeedAdjust = numBounces / BOUNCE_SPEED_ADJUST_START; // To speed up game, ball speeds up by number of bounces after BOUNCE_SPEED_ADJUST_START bounces
+      adjustSpeed(bounceSpeedAdjust * speedInc);
       float yAdjust = collidedPaddle.getYAdjust();
       float constrainedYAdjust = yAdjust != 0.0 ? constrain(collidedPaddle.getYAdjust(), -1.5, 2.0) : 1.0;
       adjustSpeed(constrainedYAdjust * direction.y * speedInc);

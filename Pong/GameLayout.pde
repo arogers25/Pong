@@ -46,6 +46,7 @@ class GameLayout extends Layout {
     } else {
       ball.setSpeed(0.0); // Reset the ball's speed to its minimum
       ball.setPos(currentStyle.center);
+      ball.setNumBounces(0);
     }
     ball.setAngle(angle);
   }
