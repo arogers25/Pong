@@ -33,6 +33,12 @@ class GameLayout extends Layout {
     background(backgroundCol.getCol());
   }
   
+  private void setShouldUpdate(boolean shouldUpdate) {
+    leftPaddle.setShouldUpdate(shouldUpdate);
+    rightPaddle.setShouldUpdate(shouldUpdate);
+    ball.setShouldUpdate(shouldUpdate);
+  }
+  
   private void resetBall(float angle) {
     if (ball == null) {
       ball = new Ball(currentStyle.center.copy(), BALL_RADIUS, leftPaddle, rightPaddle);
@@ -68,8 +74,7 @@ class GameLayout extends Layout {
     int maxScore = gameSettings.maxScore;
     if (maxScore > 0 && scoringPlayer.getScore() >= maxScore) {
       gameOverLayout = new GameOverLayout(gameSettings, scoringPlayer);
-      leftPlayer.setShouldInput(false);
-      rightPlayer.setShouldInput(false);
+      setShouldUpdate(false);
       return;
     }
     final float STARTING_COLOR_PROGRESS = 0.3;
@@ -113,4 +118,5 @@ class GameLayout extends Layout {
     createScoreZones();
     createScoreBoard();
   }
+  
 }
