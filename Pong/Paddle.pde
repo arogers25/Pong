@@ -15,6 +15,7 @@ class Paddle extends GameObject {
   
   void render() {
     pushStyle();
+    noStroke();
     fill(col);
     rect(pos.x, pos.y, size.x, size.y);
     if (bounceEffectCol.shouldUpdate()) {

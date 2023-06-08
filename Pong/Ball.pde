@@ -20,6 +20,7 @@ class Ball extends GameObject { //<>//
 
   void render() {
     pushStyle();
+    noStroke();
     ellipseMode(CORNER);
     fill(col);
     circle(pos.x, pos.y, radius);
