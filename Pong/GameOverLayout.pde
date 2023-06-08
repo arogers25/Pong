@@ -42,7 +42,7 @@ class GameOverLayout extends Layout {
     final PFont BUTTON_FONT = currentStyle.regularFont;
     final color BUTTON_COLOR = currentStyle.secondaryColor;
     
-    Button restartButton = new RectangleButton(BUTTON_FONT, "Restart", buttonStartPos, buttonSize, BUTTON_COLOR currentStyle.white, "onRestartButtonPressed");
+    Button restartButton = new RectangleButton(BUTTON_FONT, "Restart", buttonStartPos, buttonSize, BUTTON_COLOR, currentStyle.white, "onRestartButtonPressed");
     addElement(restartButton);
     
     PVector backToMenuButtonPos = PVector.add(buttonStartPos, buttonPosIncrement);

@@ -35,10 +35,10 @@ class GameSettingsLayout extends Layout {
     final PVector menuButtonSize = new PVector(width / 7.0, height / 12.0);
     
     final PVector startGameButtonPos = new PVector(currentStyle.center.x - menuButtonSize.x / 2.0, height / 1.2);
-    RectangleButton startGameButton = new RectangleButton(buttonFont, "Start Game", startGameButtonPos, menuButtonSize, BUTTON_COLOR, currentStyle.white, "onStartGameButtonPressed");
+    RectangleButton startGameButton = new RectangleButton(BUTTON_FONT, "Start Game", startGameButtonPos, menuButtonSize, BUTTON_COLOR, currentStyle.white, "onStartGameButtonPressed");
     addElement(startGameButton);
     
-    RectangleButton backToMenuButton = new RectangleButton(buttonFont, "Back to Menu", new PVector(), menuButtonSize, BUTTON_COLOR, currentStyle.white, "onBackToMenuButtonPressed");
+    RectangleButton backToMenuButton = new RectangleButton(BUTTON_FONT, "Back to Menu", new PVector(), menuButtonSize, BUTTON_COLOR, currentStyle.white, "onBackToMenuButtonPressed");
     addElement(backToMenuButton);
     
     final float colorPickerY = height / 3.0;
