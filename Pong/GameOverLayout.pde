@@ -39,17 +39,18 @@ class GameOverLayout extends Layout {
     PVector buttonSize = new PVector(winnerLabel.getTextWidth() / 3.0, height / 15.0);
     PVector buttonStartPos = new PVector(width / 2.0 - winnerLabel.getTextWidth() / 2.0, height * 0.53);
     PVector buttonPosIncrement = new PVector(buttonSize.x, 0.0);
-    PFont buttonFont = currentStyle.regularFont;
+    final PFont BUTTON_FONT = currentStyle.regularFont;
+    final color BUTTON_COLOR = currentStyle.secondaryColor;
     
-    Button restartButton = new RectangleButton(buttonFont, "Restart", buttonStartPos, buttonSize, color(70), currentStyle.white, "onRestartButtonPressed");
+    Button restartButton = new RectangleButton(BUTTON_FONT, "Restart", buttonStartPos, buttonSize, BUTTON_COLOR currentStyle.white, "onRestartButtonPressed");
     addElement(restartButton);
     
     PVector backToMenuButtonPos = PVector.add(buttonStartPos, buttonPosIncrement);
-    Button backToMenuButton = new RectangleButton(buttonFont, "Back To Menu", backToMenuButtonPos, buttonSize, color(70), currentStyle.white, "onBackToMenuButtonPressed");
+    Button backToMenuButton = new RectangleButton(BUTTON_FONT, "Back To Menu", backToMenuButtonPos, buttonSize, BUTTON_COLOR, currentStyle.white, "onBackToMenuButtonPressed");
     addElement(backToMenuButton);
     
     PVector quitButtonPos = PVector.add(backToMenuButtonPos, buttonPosIncrement);
-    Button quitButton = new RectangleButton(buttonFont, "Quit", quitButtonPos, buttonSize, color(70), currentStyle.white, "onQuitButtonPressed");
+    Button quitButton = new RectangleButton(BUTTON_FONT, "Quit", quitButtonPos, buttonSize, BUTTON_COLOR, currentStyle.white, "onQuitButtonPressed");
     addElement(quitButton);
   }
 }

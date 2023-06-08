@@ -23,16 +23,17 @@ class MenuLayout extends Layout {
   }
   
   private void addMenuButtons() {
-    PVector menuButtonSize = new PVector(width / 7.0, height / 12.0);
-    PVector centeredButtonPos = new PVector(currentStyle.center.x - (menuButtonSize.x / 2.0), currentStyle.center.y - (menuButtonSize.y / 2.0));
-    PVector buttonPosIncrement = new PVector(0.0, menuButtonSize.y * 1.5);
-    PFont buttonFont = currentStyle.regularFont;
+    final PVector menuButtonSize = new PVector(width / 7.0, height / 12.0);
+    final PVector centeredButtonPos = new PVector(currentStyle.center.x - (menuButtonSize.x / 2.0), currentStyle.center.y - (menuButtonSize.y / 2.0));
+    final PVector buttonPosIncrement = new PVector(0.0, menuButtonSize.y * 1.5);
+    final PFont BUTTON_FONT = currentStyle.regularFont;
+    final color BUTTON_COLOR = currentStyle.secondaryColor;
     
-    Button playButton = new RectangleButton(buttonFont, "Play", centeredButtonPos, menuButtonSize, color(70), currentStyle.white, "onPlayButtonPressed");
+    Button playButton = new RectangleButton(BUTTON_FONT, "Play", centeredButtonPos, menuButtonSize, currentStyle.secondaryColor, currentStyle.white, "onPlayButtonPressed");
     addElement(playButton);
     
-    PVector exitButtonPos = PVector.add(centeredButtonPos, buttonPosIncrement);
-    Button exitButton = new RectangleButton(buttonFont, "Quit", exitButtonPos, menuButtonSize, color(70), currentStyle.white, "onQuitButtonPressed");
+    final PVector exitButtonPos = PVector.add(centeredButtonPos, buttonPosIncrement);
+    Button exitButton = new RectangleButton(BUTTON_FONT, "Quit", exitButtonPos, menuButtonSize, currentStyle.secondaryColor, currentStyle.white, "onQuitButtonPressed");
     addElement(exitButton);
   }
 }
