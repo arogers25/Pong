@@ -101,7 +101,7 @@ class GameLayout extends Layout {
   }
   
   private void createScoreBoard() {
-    scoreBoard = new ScoreBoard(new PVector(0.0, height / 7.0), new PVector(width, height), width * (1.5 / 6.0), leftPlayer, rightPlayer);
+    scoreBoard = new ScoreBoard(gameSettings.maxScore, new PVector(0.0, height / 7.0), new PVector(width, height), width * (1.5 / 6.0), leftPlayer, rightPlayer);
     scoreBoard.updateScore();
     addElement(scoreBoard);
   }
