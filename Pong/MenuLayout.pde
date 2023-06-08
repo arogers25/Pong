@@ -29,11 +29,11 @@ class MenuLayout extends Layout {
     final PFont BUTTON_FONT = currentStyle.regularFont;
     final color BUTTON_COLOR = currentStyle.secondaryColor;
     
-    Button playButton = new RectangleButton(BUTTON_FONT, "Play", centeredButtonPos, menuButtonSize, currentStyle.secondaryColor, currentStyle.white, "onPlayButtonPressed");
+    Button playButton = new RectangleButton(BUTTON_FONT, "Play", centeredButtonPos, menuButtonSize, BUTTON_COLOR, currentStyle.white, "onPlayButtonPressed");
     addElement(playButton);
     
     final PVector exitButtonPos = PVector.add(centeredButtonPos, buttonPosIncrement);
-    Button exitButton = new RectangleButton(BUTTON_FONT, "Quit", exitButtonPos, menuButtonSize, currentStyle.secondaryColor, currentStyle.white, "onQuitButtonPressed");
+    Button exitButton = new RectangleButton(BUTTON_FONT, "Quit", exitButtonPos, menuButtonSize, BUTTON_COLOR, currentStyle.white, "onQuitButtonPressed");
     addElement(exitButton);
   }
 }
