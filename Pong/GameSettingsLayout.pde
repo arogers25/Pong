@@ -66,6 +66,7 @@ class GameSettingsLayout extends Layout {
     
     final PVector scoreSliderLabelPos = new PVector(scoreSliderPos.x, scoreSliderPos.y - menuButtonSize.y);
     maxScoreLabel = new Label(currentStyle.regularFont, "", scoreSliderLabelPos, new PVector(scoreSliderSize.x, menuButtonSize.y), currentStyle.white, CENTER, CENTER);
+    updateMaxScoreLabel();
     addElement(maxScoreLabel);
   }
   
