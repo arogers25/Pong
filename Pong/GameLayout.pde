@@ -7,6 +7,7 @@ class GameLayout extends Layout {
   private ScoreBoard scoreBoard;
   private Ball ball;
   private GameOverLayout gameOverLayout;
+  private AudioSample scoreSound;
   private final float BALL_RADIUS = height / 30.0;
   private final float BALL_START_ANGLE = radians(120.0);
   
@@ -16,6 +17,7 @@ class GameLayout extends Layout {
     backgroundCol = new LerpColor(currentStyle.black, LERP_TIME_MULT);
     this.gameSettings = gameSettings;
     createGameObjects();
+    scoreSound = minim.loadSample("data/sounds/defaultScore.mp3");
   }
   
   void update() {
@@ -80,6 +82,7 @@ class GameLayout extends Layout {
     }
     final float STARTING_COLOR_PROGRESS = 0.3;
     backgroundCol.startLerp(scoringPlayer.getCol(), STARTING_COLOR_PROGRESS);
+    scoreSound.trigger();
     resetBall(angle);
   }
   

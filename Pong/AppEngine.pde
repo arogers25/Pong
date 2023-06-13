@@ -5,11 +5,13 @@
 import java.lang.reflect.Method; // For element click events
 import ddf.minim.*;
 
+Minim minim;
 Style currentStyle;
 Layout currentLayout;
 
 void setupAppEngine() {
   Input.setAppInst(this);
+  minim = new Minim(this);
   currentStyle = new Style();
 }
 

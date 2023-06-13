@@ -5,6 +5,7 @@ class Ball extends GameObject { //<>//
   private Paddle leftPaddle, rightPaddle;
   private boolean collisionHandled;
   private int numBounces;
+  private AudioSample bounceSound;
 
   Ball(PVector pos, float radius, Paddle leftPaddle, Paddle rightPaddle) {
     super(pos, new PVector(radius, radius));
@@ -17,6 +18,7 @@ class Ball extends GameObject { //<>//
     direction = new PVector();
     this.leftPaddle = leftPaddle;
     this.rightPaddle = rightPaddle;
+    bounceSound = minim.loadSample("data/sounds/defaultBounce.mp3");
   }
 
   void render() {
@@ -136,6 +138,7 @@ class Ball extends GameObject { //<>//
       if ((-collidedPaddle.getYAdjust() * direction.y) > 0.0) {
         direction.y = -direction.y;
       }
+      bounceSound.trigger();
       collisionHandled = true;
     } else {
       if (collidedPaddle.getYAdjust() != 0) {
