@@ -69,6 +69,7 @@ class Ball extends GameObject { //<>//
         direction.y = -direction.y;
       }
       pos.y = constrain(pos.y, 0, height - size.y);
+      bounceSound.trigger();
     }
   }
 
