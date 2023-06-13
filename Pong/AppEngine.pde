@@ -3,6 +3,7 @@
 // There should be no modifications to this code, and all unique code for a project should be contained in its main file or in a different file 
 
 import java.lang.reflect.Method; // For element click events
+import ddf.minim.*;
 
 Style currentStyle;
 Layout currentLayout;
