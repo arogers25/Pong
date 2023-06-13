@@ -13,6 +13,10 @@ class MenuLayout extends Layout {
     setCurrentLayout(new GameSettingsLayout());
   }
   
+  void onSoundSettingsButtonPressed() {
+    setCurrentLayout(new SoundSettingsLayout());
+  }
+  
   void onQuitButtonPressed() {
     exit();
   }
@@ -32,7 +36,11 @@ class MenuLayout extends Layout {
     Button playButton = new RectangleButton(BUTTON_FONT, "Play", centeredButtonPos, menuButtonSize, BUTTON_COLOR, currentStyle.white, "onPlayButtonPressed");
     addElement(playButton);
     
-    final PVector exitButtonPos = PVector.add(centeredButtonPos, buttonPosIncrement);
+    final PVector soundSettingsButtonPos = PVector.add(centeredButtonPos, buttonPosIncrement);
+    Button soundSettingsButton = new RectangleButton(BUTTON_FONT, "Change Sounds", soundSettingsButtonPos, menuButtonSize, BUTTON_COLOR, currentStyle.white, "onSoundSettingsButtonPressed");
+    addElement(soundSettingsButton);
+    
+    final PVector exitButtonPos = PVector.add(soundSettingsButtonPos, buttonPosIncrement);
     Button exitButton = new RectangleButton(BUTTON_FONT, "Quit", exitButtonPos, menuButtonSize, BUTTON_COLOR, currentStyle.white, "onQuitButtonPressed");
     addElement(exitButton);
   }
