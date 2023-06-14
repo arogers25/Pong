@@ -1,4 +1,4 @@
-HashMap<String, File> songPaths;
+HashMap<String, File> soundPaths;
 
 // For draw() see AppEngine.pde
 float oldTime = 0.0;
@@ -10,8 +10,21 @@ void settings() {
 
 void setup() {
   setupAppEngine();
-  songPaths = new HashMap();
   setCurrentLayout(new MenuLayout());
+  loadDefaultSounds();
+}
+
+void loadDefaultSounds() {
+  soundPaths = new HashMap();
+  final String SOUNDS_PATH = sketchPath() + "/data/sounds/";
+  File defaultBounce = new File(SOUNDS_PATH + "defaultBounce.mp3");
+  if (defaultBounce.exists()) {
+    soundPaths.put("bounceSound", defaultBounce);
+  }
+  File defaultScore = new File(SOUNDS_PATH + "defaultScore.mp3");
+  if (defaultScore.exists()) {
+    soundPaths.put("scoreSound", defaultScore);
+  }
 }
 
 void updateDeltaTime() {

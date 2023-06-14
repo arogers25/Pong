@@ -18,7 +18,7 @@ class GameLayout extends Layout {
     this.gameSettings = gameSettings;
     createGameObjects();
     try {
-      scoreSound = minim.loadSample(songPaths.get("scoreSound").toString());
+      scoreSound = minim.loadSample(soundPaths.get("scoreSound").toString());
     } catch (Exception e) {
       println("Failed loading score sound: ", e.toString());
     }
