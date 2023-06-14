@@ -1,4 +1,4 @@
-HashMap<String, String> songPaths;
+HashMap<String, File> songPaths;
 
 // For draw() see AppEngine.pde
 float oldTime = 0.0;

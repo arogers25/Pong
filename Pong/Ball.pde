@@ -19,7 +19,7 @@ class Ball extends GameObject { //<>//
     this.leftPaddle = leftPaddle;
     this.rightPaddle = rightPaddle;
     try {
-      bounceSound = minim.loadSample(songPaths.get("bounceSound"));
+      bounceSound = minim.loadSample(songPaths.get("bounceSound").toString());
     } catch (Exception e) {
       println("Failed loading bounce sound: ", e.toString());
     }

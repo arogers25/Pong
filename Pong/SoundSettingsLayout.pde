@@ -24,7 +24,7 @@ public class SoundSettingsLayout extends Layout {
     if (selectedSound == null || !selectedSound.getPath().endsWith(".mp3")) {
       return;
     }
-    songPaths.put(soundToModify, selectedSound.getAbsolutePath());
+    songPaths.put(soundToModify, selectedSound);
     pathLabels.get(soundToModify).setDisplayText(selectedSound.getName()); 
   }
   
@@ -46,7 +46,8 @@ public class SoundSettingsLayout extends Layout {
     "onSetSoundButtonPressed", 
     soundName);
     addElement(modifySoundButton);
-    Label modifySoundLabel = new Label(currentStyle.regularFont, "No sound selected!", soundLabelPos, soundLabelSize, currentStyle.white, CENTER, CENTER);
+    String foundSongName = songPaths.get(soundName) == null ? "No song selected!" : songPaths.get(soundName).getName();
+    Label modifySoundLabel = new Label(currentStyle.regularFont, foundSongName, soundLabelPos, soundLabelSize, currentStyle.white, CENTER, CENTER);
     addElement(modifySoundLabel);
     pathLabels.put(soundName, modifySoundLabel);
   }
