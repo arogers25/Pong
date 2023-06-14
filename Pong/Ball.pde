@@ -18,7 +18,11 @@ class Ball extends GameObject { //<>//
     direction = new PVector();
     this.leftPaddle = leftPaddle;
     this.rightPaddle = rightPaddle;
-    bounceSound = minim.loadSample(songPaths.get("bounceSound"));
+    try {
+      bounceSound = minim.loadSample(songPaths.get("bounceSound"));
+    } catch (Exception e) {
+      println("Failed loading bounce sound: ", e.toString());
+    }
   }
 
   void render() {
@@ -69,7 +73,9 @@ class Ball extends GameObject { //<>//
         direction.y = -direction.y;
       }
       pos.y = constrain(pos.y, 0, height - size.y);
-      bounceSound.trigger();
+      if (bounceSound != null) {
+        bounceSound.trigger();
+      }
     }
   }
 
@@ -139,13 +145,22 @@ class Ball extends GameObject { //<>//
       if ((-collidedPaddle.getYAdjust() * direction.y) > 0.0) {
         direction.y = -direction.y;
       }
-      bounceSound.trigger();
+      if (bounceSound != null) {
+        bounceSound.trigger();
+      }
       collisionHandled = true;
     } else {
       if (collidedPaddle.getYAdjust() != 0) {
         adjustSpeed(abs(collidedPaddle.getYAdjust()) * speedInc * 0.5);
       }
       pos.add(0.5 * direction.x * speed * deltaTime, 0.5 * direction.y * speed * deltaTime);
+    }
+  }
+  
+  void deleteSound() {
+    if (bounceSound != null) {
+      bounceSound.close();
+      bounceSound = null;
     }
   }
 }

@@ -23,6 +23,8 @@ class GameOverLayout extends Layout {
   }
   
   void onBackToMenuButtonPressed() {
+    GameLayout gameLayout = (GameLayout)currentLayout;
+    gameLayout.deleteSounds();
     currentLayout = new MenuLayout();
   }
   

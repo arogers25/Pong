@@ -17,7 +17,11 @@ class GameLayout extends Layout {
     backgroundCol = new LerpColor(currentStyle.black, LERP_TIME_MULT);
     this.gameSettings = gameSettings;
     createGameObjects();
-    scoreSound = minim.loadSample(songPaths.get("scoreSound"));
+    try {
+      scoreSound = minim.loadSample(songPaths.get("scoreSound"));
+    } catch (Exception e) {
+      println("Failed loading score sound: ", e.toString());
+    }
   }
   
   void update() {
@@ -82,7 +86,9 @@ class GameLayout extends Layout {
     }
     final float STARTING_COLOR_PROGRESS = 0.3;
     backgroundCol.startLerp(scoringPlayer.getCol(), STARTING_COLOR_PROGRESS);
-    scoreSound.trigger();
+    if (scoreSound != null) {
+      scoreSound.trigger();
+    }
     resetBall(angle);
   }
   
@@ -123,4 +129,10 @@ class GameLayout extends Layout {
     createScoreBoard();
   }
   
+  private void deleteSounds() {
+    if (scoreSound != null) {
+      scoreSound.close();
+    }
+    ball.deleteSound();
+  }
 }

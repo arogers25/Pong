@@ -1,6 +1,9 @@
 public class SoundSettingsLayout extends Layout {
-  String soundToModify;
-  HashMap<String, Label> pathLabels;
+  private String soundToModify;
+  private HashMap<String, Label> pathLabels;
+  final PFont BUTTON_FONT = currentStyle.regularFont;
+  final color BUTTON_COLOR = currentStyle.secondaryColor;
+  final PVector menuButtonSize = new PVector(width / 7.0, height / 12.0);
   
   SoundSettingsLayout() {
     super();
@@ -17,7 +20,7 @@ public class SoundSettingsLayout extends Layout {
   }
   
   void setSelectedSound(File selectedSound) {
-    if (selectedSound == null) {
+    if (selectedSound == null || !selectedSound.getPath().endsWith(".mp3")) {
       return;
     }
     songPaths.put(soundToModify, selectedSound.getAbsolutePath());
@@ -27,18 +30,28 @@ public class SoundSettingsLayout extends Layout {
   
   void onSetSoundButtonPressed(String soundToModify) {
     this.soundToModify = soundToModify;
-    //songPaths.put(soundToModify, "Testing");
     selectInput("Select a sound to add:", "setSelectedSound", null, this);
-    //soundToModify = minim.loadSample("data/sounds/defaultBounce.mp3");
   }
   
-  //private createModifySoundButton(String label, PVector pos, PVector size, 
+  private void createModifySoundButton(String label, String soundName, PVector pos) {
+    final PVector soundLabelPos = new PVector(pos.x + menuButtonSize.x, pos.y);
+    final PVector soundLabelSize = new PVector(width - pos.x - menuButtonSize.x, menuButtonSize.y);
+    
+    RectangleButton modifySoundButton = new RectangleButton(BUTTON_FONT, 
+    label, 
+    pos, 
+    menuButtonSize, 
+    BUTTON_COLOR, 
+    currentStyle.white, 
+    "onSetSoundButtonPressed", 
+    soundName);
+    addElement(modifySoundButton);
+    Label modifySoundLabel = new Label(currentStyle.regularFont, "No sound selected!", soundLabelPos, soundLabelSize, currentStyle.white, CENTER, CENTER);
+    addElement(modifySoundLabel);
+    pathLabels.put(soundName, modifySoundLabel);
+  }
 
   private void addMenuButtons() {
-    final PFont BUTTON_FONT = currentStyle.regularFont;
-    final color BUTTON_COLOR = currentStyle.secondaryColor;
-    final PVector menuButtonSize = new PVector(width / 7.0, height / 12.0);
-
     RectangleButton backToMenuButton = new RectangleButton(BUTTON_FONT, 
     "Back to Menu", 
     new PVector(), 
@@ -48,35 +61,12 @@ public class SoundSettingsLayout extends Layout {
     "onBackToMenuButtonPressed");
     addElement(backToMenuButton);
     
-    PVector initialSoundButtonPos = PVector.sub(currentStyle.center, PVector.mult(menuButtonSize, 2.5));
-    PVector initialSoundLabelPos = new PVector(initialSoundButtonPos.x + menuButtonSize.x, initialSoundButtonPos.y);
-    PVector buttonPosIncrement = new PVector(0.0, menuButtonSize.y * 2.0);
-    PVector soundLabelSize = new PVector(width - initialSoundButtonPos.x - menuButtonSize.x, menuButtonSize.y);
-    RectangleButton bounceSoundButton = new RectangleButton(BUTTON_FONT, 
-    "Bounce Sound", 
-    initialSoundButtonPos, 
-    menuButtonSize, 
-    BUTTON_COLOR, 
-    currentStyle.white, 
-    "onSetSoundButtonPressed", 
-    "bounceSound");
-    addElement(bounceSoundButton);
-    Label bounceSoundLabel = new Label(currentStyle.regularFont, "No sound selected!", initialSoundLabelPos, soundLabelSize, currentStyle.white, CENTER, CENTER);
-    addElement(bounceSoundLabel);
-    pathLabels.put("bounceSound", bounceSoundLabel);
-    
-    //PVector scoreSound
-    RectangleButton scoreSoundButton = new RectangleButton(BUTTON_FONT, 
-    "Score Sound", 
-    PVector.add(initialSoundButtonPos, buttonPosIncrement), 
-    menuButtonSize, 
-    BUTTON_COLOR, 
-    currentStyle.white, 
-    "onSetSoundButtonPressed", 
-    "scoreSound");
-    addElement(scoreSoundButton);
-    Label scoreSoundLabel = new Label(currentStyle.regularFont, "No sound selected!", PVector.add(initialSoundLabelPos, buttonPosIncrement), soundLabelSize, currentStyle.white, CENTER, CENTER);
-    addElement(scoreSoundLabel);
-    pathLabels.put("scoreSound", scoreSoundLabel);
+    final PVector buttonIncrement = new PVector(0.0, menuButtonSize.y * 2.0);
+    final PVector initialSoundButtonPos = PVector.sub(currentStyle.center, PVector.mult(menuButtonSize, 2.5));
+    createModifySoundButton("Bounce Sound", "bounceSound", initialSoundButtonPos);
+    final PVector scoreSoundButtonPos = PVector.add(initialSoundButtonPos, buttonIncrement);
+    createModifySoundButton("Score Sound", "scoreSound", scoreSoundButtonPos);
+    final PVector musicButtonPos = PVector.add(scoreSoundButtonPos, buttonIncrement);
+    createModifySoundButton("Music", "gameMusic", musicButtonPos);
   }
 }
