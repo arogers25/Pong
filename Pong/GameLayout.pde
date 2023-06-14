@@ -17,7 +17,7 @@ class GameLayout extends Layout {
     backgroundCol = new LerpColor(currentStyle.black, LERP_TIME_MULT);
     this.gameSettings = gameSettings;
     createGameObjects();
-    scoreSound = minim.loadSample("data/sounds/defaultScore.mp3");
+    scoreSound = minim.loadSample(songPaths.get("scoreSound"));
   }
   
   void update() {

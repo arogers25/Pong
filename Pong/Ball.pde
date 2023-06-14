@@ -18,7 +18,7 @@ class Ball extends GameObject { //<>//
     direction = new PVector();
     this.leftPaddle = leftPaddle;
     this.rightPaddle = rightPaddle;
-    bounceSound = minim.loadSample("data/sounds/defaultBounce.mp3");
+    bounceSound = minim.loadSample(songPaths.get("bounceSound"));
   }
 
   void render() {
