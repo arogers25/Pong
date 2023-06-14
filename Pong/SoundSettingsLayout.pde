@@ -9,6 +9,7 @@ public class SoundSettingsLayout extends Layout {
     super();
     pathLabels = new HashMap();
     addMenuButtons();
+    addWarningLabel();
   }
 
   void drawBackground() {
@@ -25,7 +26,6 @@ public class SoundSettingsLayout extends Layout {
     }
     songPaths.put(soundToModify, selectedSound.getAbsolutePath());
     pathLabels.get(soundToModify).setDisplayText(selectedSound.getName()); 
-    
   }
   
   void onSetSoundButtonPressed(String soundToModify) {
@@ -68,5 +68,9 @@ public class SoundSettingsLayout extends Layout {
     createModifySoundButton("Score Sound", "scoreSound", scoreSoundButtonPos);
     final PVector musicButtonPos = PVector.add(scoreSoundButtonPos, buttonIncrement);
     createModifySoundButton("Music", "gameMusic", musicButtonPos);
+  }
+  
+  private void addWarningLabel() {
+    addElement(new Label(currentStyle.regularFont, "All sounds must be .mp3s", new PVector(0, height / 7.0), new PVector(width, height / 7.0), currentStyle.white, CENTER, CENTER));
   }
 }
