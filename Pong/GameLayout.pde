@@ -17,11 +17,7 @@ class GameLayout extends Layout {
     backgroundCol = new LerpColor(currentStyle.black, LERP_TIME_MULT);
     this.gameSettings = gameSettings;
     createGameObjects();
-    try {
-      scoreSound = minim.loadSample(soundPaths.get("scoreSound").toString());
-    } catch (Exception e) {
-      println("Failed loading score sound: ", e.toString());
-    }
+    createScoreSound();
   }
   
   void update() {
@@ -77,6 +73,7 @@ class GameLayout extends Layout {
     if (gameOverLayout == null) {
       scoringPlayer.increaseScore(1);
       scoreBoard.updateScore();
+      playScoreSound();
     }
     int maxScore = gameSettings.maxScore;
     if (maxScore > 0 && scoringPlayer.getScore() >= maxScore) {
@@ -86,9 +83,6 @@ class GameLayout extends Layout {
     }
     final float STARTING_COLOR_PROGRESS = 0.3;
     backgroundCol.startLerp(scoringPlayer.getCol(), STARTING_COLOR_PROGRESS);
-    if (scoreSound != null) {
-      scoreSound.trigger();
-    }
     resetBall(angle);
   }
   
@@ -129,10 +123,25 @@ class GameLayout extends Layout {
     createScoreBoard();
   }
   
+  private void createScoreSound() {
+    try {
+      scoreSound = minim.loadSample(soundPaths.get("scoreSound").toString());
+    } catch (Exception e) {
+      println("Failed loading score sound: ", e.toString());
+    }
+  }
+  
+  private void playScoreSound() {
+    if (scoreSound != null) {
+      scoreSound.trigger();
+    }
+  }
+  
   private void deleteSounds() {
     if (scoreSound != null) {
       scoreSound.close();
+      scoreSound = null;
     }
-    ball.deleteSound();
+    ball.deleteBounceSound();
   }
 }
