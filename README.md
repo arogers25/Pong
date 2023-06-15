@@ -1,6 +1,7 @@
 # Pong
 CS30 Final Project: A modern version of Pong made with Processing 4
-![mainScreenShot](https://github-production-user-asset-6210df.s3.amazonaws.com/98920817/246206813-3feef41b-4c4b-4f81-88b4-b3c9ec2131ca.png)
+![mainScreenShot](https://github-production-user-asset-6210df.s3.amazonaws.com/98920817/246207263-4f307274-6add-49dc-a293-10079d6efda5.png)
+
 
 
 # Features
