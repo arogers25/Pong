@@ -18,8 +18,9 @@ void exit() {
   if (Input.isKeyPressed(ESC)) {
     setCurrentLayout(new MenuLayout());
     return;
+  } else {
+    super.exit();
   }
-  super.exit();
 }
 
 void loadDefaultSounds() {
