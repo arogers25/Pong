@@ -17,7 +17,7 @@ public class SoundSettingsLayout extends Layout {
   }
 
   void onBackToMenuButtonPressed() {
-    currentLayout = new MenuLayout();
+    setCurrentLayout(new MenuLayout());
   }
   
   void setSelectedSound(File selectedSound) {

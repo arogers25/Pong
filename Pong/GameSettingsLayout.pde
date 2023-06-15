@@ -17,11 +17,11 @@ class GameSettingsLayout extends Layout {
     color leftPaddleCol = leftColorPicker.getPickedCol();
     color rightPaddleCol = rightColorPicker.getPickedCol();
     GameSettings gameSettings = new GameSettings(maxScore, leftPaddleCol, rightPaddleCol);
-    currentLayout = new GameLayout(gameSettings);
+    setCurrentLayout(new GameLayout(gameSettings));
   }
   
   void onBackToMenuButtonPressed() {
-    currentLayout = new MenuLayout();
+    setCurrentLayout(new MenuLayout());
   }
   
   void update() {

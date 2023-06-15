@@ -14,6 +14,14 @@ void setup() {
   loadDefaultSounds();
 }
 
+void exit() {
+  if (Input.isKeyPressed(ESC)) {
+    setCurrentLayout(new MenuLayout());
+    return;
+  }
+  super.exit();
+}
+
 void loadDefaultSounds() {
   soundPaths = new HashMap();
   final String SOUNDS_PATH = sketchPath() + "/data/sounds/";

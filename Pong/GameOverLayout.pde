@@ -19,13 +19,13 @@ class GameOverLayout extends Layout {
   }
   
   void onRestartButtonPressed() {
-    currentLayout = new GameLayout(gameSettings);
+    setCurrentLayout(new GameLayout(gameSettings));
   }
   
   void onBackToMenuButtonPressed() {
     GameLayout gameLayout = (GameLayout)currentLayout;
     gameLayout.deleteSounds();
-    currentLayout = new MenuLayout();
+    setCurrentLayout(new MenuLayout());
   }
   
   void onQuitButtonPressed() {
