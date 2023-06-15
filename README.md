@@ -1,7 +1,7 @@
 # Pong
 CS30 Final Project: A modern version of Pong made with Processing 4
+![mainScreenShot](https://github-production-user-asset-6210df.s3.amazonaws.com/98920817/246206813-3feef41b-4c4b-4f81-88b4-b3c9ec2131ca.png)
 
-![image](https://github.com/arogers25/Pong/assets/98920817/d0457964-b6d8-4a74-92a7-5bf1d07a5f63)
 
 # Features
 - Responsive visual effects for paddles and scoring
