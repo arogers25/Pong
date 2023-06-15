@@ -29,6 +29,9 @@ class GameLayout extends Layout {
     if (gameOverLayout != null) {
       gameOverLayout.update();
     }
+    if (shouldExitToMenu) {
+      deleteSounds();
+    }
   }
   
   protected final void drawBackground() {

@@ -8,6 +8,7 @@ import ddf.minim.*;
 Minim minim;
 Style currentStyle;
 Layout currentLayout;
+boolean shouldExitToMenu = false;
 
 void setupAppEngine() {
   Input.setAppInst(this);
@@ -27,6 +28,19 @@ void draw() {
     currentLayout.update();
   }
   Input.updateStates();
+  if (shouldExitToMenu) {
+    setCurrentLayout(new MenuLayout());
+    shouldExitToMenu = false;
+  }
+}
+
+void exit() {
+  if (Input.isKeyPressed(ESC)) {
+    shouldExitToMenu = true;
+    return;
+  } else {
+    super.exit();
+  }
 }
 
 void keyPressed() {
