@@ -8,6 +8,7 @@ class GameLayout extends Layout {
   private Ball ball;
   private GameOverLayout gameOverLayout;
   private AudioSample scoreSound;
+  private AudioPlayer gameMusic;
   private final float BALL_RADIUS = height / 30.0;
   private final float BALL_START_ANGLE = radians(120.0);
   
@@ -18,6 +19,8 @@ class GameLayout extends Layout {
     this.gameSettings = gameSettings;
     createGameObjects();
     createScoreSound();
+    createGameMusic();
+    playGameMusic();
   }
   
   void update() {
@@ -78,6 +81,7 @@ class GameLayout extends Layout {
     int maxScore = gameSettings.maxScore;
     if (maxScore > 0 && scoringPlayer.getScore() >= maxScore) {
       gameOverLayout = new GameOverLayout(gameSettings, scoringPlayer);
+      pauseGameMusic();
       setShouldUpdate(false);
       return;
     }
@@ -137,10 +141,35 @@ class GameLayout extends Layout {
     }
   }
   
+   private void createGameMusic() {
+    try {
+      gameMusic = minim.loadFile(soundPaths.get("gameMusic").toString());
+    } catch (Exception e) {
+      println("Failed loading score sound: ", e.toString());
+    }
+  }
+  
+  private void playGameMusic() {
+    if (gameMusic != null) {
+      gameMusic.play();
+      gameMusic.loop(-1);
+    }
+  }
+  
+  void pauseGameMusic() {
+    if (gameMusic != null) {
+      gameMusic.pause();
+    }
+  }
+  
   private void deleteSounds() {
     if (scoreSound != null) {
       scoreSound.close();
       scoreSound = null;
+    }
+    if (gameMusic != null) {
+      gameMusic.close();
+      gameMusic = null;
     }
     ball.deleteBounceSound();
   }
