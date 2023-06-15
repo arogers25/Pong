@@ -142,11 +142,11 @@ class GameLayout extends Layout {
   }
   
    private void createGameMusic() {
-    try {
-      gameMusic = minim.loadFile(soundPaths.get("gameMusic").toString());
-    } catch (Exception e) {
-      println("Failed loading score sound: ", e.toString());
-    }
+     try {
+       gameMusic = minim.loadFile(soundPaths.get("gameMusic").toString());
+     } catch (Exception e) {
+       println("Failed loading score sound: ", e.toString());
+     }
   }
   
   private void playGameMusic() {
